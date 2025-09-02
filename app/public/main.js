@@ -14,6 +14,11 @@ import { loadXRAnimatorAnimation } from './loadXRAnimatorAnimation.js'; // XR An
 // ボタンのアクション（はい・いいえ）に対応する設定です。
 // アニメーション、音声、表情のファイルパスや名前をここで一元管理します。
 const ACTION_CONFIG = {
+    idle: {
+        animationPath: 'animations/idle.fbx',
+        soundPath: 'sounds/yes.mp3', // 例: 導入の音声
+        expression: 'happy'
+    },
     yes: {
         animationPath: 'animations/motion_20second.glb', // 「はい」の時に再生するアニメーションファイル
         soundPath: 'sounds/yes.mp3',             // 「はい」の時に再生する音声ファイル
@@ -408,11 +413,13 @@ class VRMViewer {
 
 // --- ステップごとの再生アクション定義 ---
 // ※ あるものでOK：idle / yes / no（必要ならACTION_CONFIGに追加して拡張）
+/*
 const STEP_ACTION_MAP = {
     step1: 'idle',      // ご案内開始
-    step2: 'yes',       // 入力
-    step3: 'no',        // 確認
-    step4: 'yes',       // 完了（例：肯定モーションでお礼）
+    step2: 'no',       // 入力
+    step3: 'no',        // 
+    step4: 'no',       // 
+    pageComplete: 'idle',
 };
 
 // --- 画面フロー管理クラス ---
@@ -446,6 +453,7 @@ class StepFlow {
         this.current = stepId;
     }
 }
+*/
 // =================================================================================
 // アプリケーションの実行
 // =================================================================================

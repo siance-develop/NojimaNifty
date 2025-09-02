@@ -29,7 +29,7 @@
                         「視聴開始」を押してください。
                     </p>
                 </div>
-                <div class="page-bottom">
+                <div class="page-bottom right">
                     <button class="btn next" data-next="page2">視聴開始</button>
                 </div>
             </section>
@@ -45,24 +45,111 @@
                 </div>
                 <!-- 例: 顧客情報カード -->
                 <div class="card">
-                    <ul class="form-like">
-                        <li><label>お申込者名（カナ）<span class="fix">修正</span></label>
-                            <div><span class="chip">ミホン</span><span class="chip">タロウ</span></div>
+                    <ul class="form-like form-like--sheet">
+
+                        <!-- お申込者名（カナ） -->
+                        <li class="row">
+                            <div class="row-label">
+                                <span class="badge">お申込者名（カナ）</span>
+                            </div>
+
+                            <div class="row-body row-two">
+                                <label class="mini">姓</label>
+                                <input class="pill-input" id="nameKanaFamily" name="nameKanaFamily" type="text"
+                                    inputmode="kana" value="ミホン" />
+                                <label class="mini">名</label>
+                                <input class="pill-input" id="nameKanaGiven" name="nameKanaGiven" type="text"
+                                    inputmode="kana" value="タロウ" />
+                            </div>
+
+                            <div class="row-ctrl">
+                                <button class="fix-btn" type="button">修正</button>
+                            </div>
                         </li>
-                        <li><label>お申込者名（漢字）<span class="fix">修正</span></label>
-                            <div><span class="chip">見本</span><span class="chip">太郎</span></div>
+
+                        <!-- お申込者名（漢字） -->
+                        <li class="row">
+                            <div class="row-label">
+                                <span class="badge">お申込者名（漢字）</span>
+                            </div>
+
+                            <div class="row-body row-two">
+                                <label class="mini">姓</label>
+                                <input class="pill-input" id="nameKanjiFamily" name="nameKanjiFamily" type="text"
+                                    value="見本" />
+                                <label class="mini">名</label>
+                                <input class="pill-input" id="nameKanjiGiven" name="nameKanjiGiven" type="text"
+                                    value="太郎" />
+                            </div>
+
+                            <div class="row-ctrl">
+                                <button class="fix-btn" type="button">修正</button>
+                            </div>
                         </li>
-                        <li><label>性別<span class="fix">修正</span></label>
-                            <div class="pill">男性</div>
+
+                        <!-- 性別（表示ピル） -->
+                        <li class="row">
+                            <div class="row-label">
+                                <span class="badge">性別</span>
+                            </div>
+
+                            <div class="row-body">
+                                <div class="pill-display">男性</div>
+                            </div>
+
+                            <div class="row-ctrl">
+                                <button class="fix-btn" type="button">修正</button>
+                            </div>
                         </li>
-                        <li><label>生年月日<span class="fix">修正</span></label>
-                            <div class="pill">1982 年 6 月 23 日</div>
+
+                        <!-- 生年月日（3分割 + 年月日ラベル） -->
+                        <li class="row">
+                            <div class="row-label">
+                                <span class="badge">生年月日</span>
+                            </div>
+
+                            <div class="row-body row-date">
+                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                    maxlength="4" value="1982" />
+                                <span class="unit">年</span>
+                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                    maxlength="2" value="6" />
+                                <span class="unit">月</span>
+                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                    maxlength="2" value="23" />
+                                <span class="unit">日</span>
+                            </div>
+
+                            <div class="row-ctrl">
+                                <button class="fix-btn" type="button">修正</button>
+                            </div>
                         </li>
-                        <li><label>電話番号<span class="fix">修正</span></label>
-                            <div class="pill">080 − 1234 − 5678</div>
+
+                        <!-- 電話番号（3分割 + 罫線風ハイフン） -->
+                        <li class="row">
+                            <div class="row-label">
+                                <span class="badge">電話番号</span>
+                            </div>
+
+                            <div class="row-body row-tel">
+                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                    maxlength="4" value="080" />
+                                <span class="sep">—</span>
+                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                    maxlength="4" value="1234" />
+                                <span class="sep">—</span>
+                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                    maxlength="4" value="5678" />
+                            </div>
+
+                            <div class="row-ctrl">
+                                <button class="fix-btn" type="button">修正</button>
+                            </div>
                         </li>
+
                     </ul>
                 </div>
+
                 <div class="page-bottom">
                     <button class="btn back" data-prev="page1">戻る</button>
                     <button class="btn next" data-next="page3">次へ</button>

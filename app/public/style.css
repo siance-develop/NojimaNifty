@@ -10,15 +10,30 @@
 }
 
 /* 余白リセット */
-html, body, h1, h2, h3, h4, h5, h6, p,
-ul, ol, li, figure, figcaption, blockquote,
-dl, dd {
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
   margin: 0;
   padding: 0;
 }
 
 /* リストの装飾を消す */
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -32,13 +47,20 @@ body {
 }
 
 /* メディア要素の調整 */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* 入力・ボタンのフォント継承 */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
   color: inherit;
 }
@@ -57,24 +79,30 @@ a {
 }
 
 /* レイヤー */
-html, body {
-  height:100%;
-  letter-spacing: 0.03em; /* 日本語・英数字が混ざっても読みやすい */
+html,
+body {
+  height: 100%;
+  letter-spacing: 0.03em;
+  /* 日本語・英数字が混ざっても読みやすい */
   word-break: break-word;
   -webkit-text-size-adjust: 100%;
 }
 
-body { margin:0; }
+body {
+  margin: 0;
+}
 
 /* モーダル全体 */
 .modal {
   position: fixed;
-  inset: 0; /* top:0; left:0; right:0; bottom:0 と同じ */
+  inset: 0;
+  /* top:0; left:0; right:0; bottom:0 と同じ */
   background: rgba(0, 0, 0, 0.6);
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 2000; /* UIより最前面 */
+  z-index: 2000;
+  /* UIより最前面 */
 }
 
 /* 有効化 */
@@ -108,31 +136,49 @@ body { margin:0; }
   cursor: pointer;
 }
 
-#startButton:hover {
-  background: #e68900;
-}
 
 
 
 
 
-
-
-#app { position:fixed; inset:0; }
-canvas { display:block; width:100%; height:100%; }
 #app {
   position: fixed;
-  inset: 0;       /* 画面全体を占有 */
-  display: block; /* 空でもブロックとして扱う */
+  inset: 0;
 }
+
 canvas {
   display: block;
   width: 100%;
   height: 100%;
 }
+
+#app {
+  position: fixed;
+  inset: 0;
+  /* 画面全体を占有 */
+  display: block;
+  /* 空でもブロックとして扱う */
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 /* UIをcanvas上に */
-#ui { position:absolute; inset:0; pointer-events:none; }
-#ui .page, #ui button, #ui input, #ui a { pointer-events:auto; }
+#ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#ui .page,
+#ui button,
+#ui input,
+#ui a {
+  pointer-events: auto;
+}
 
 /* ページ枠（中央寄せ、下部ナビ固定のため relative） */
 .page {
@@ -140,7 +186,10 @@ canvas {
   inset: 0;
   display: none;
 }
-.page.active { display:block; }
+
+.page.active {
+  display: block;
+}
 
 .balloon {
   position: relative;
@@ -159,11 +208,13 @@ canvas {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -36px; /* balloon の下から飛び出す */
+  bottom: -36px;
+  /* balloon の下から飛び出す */
   width: 0;
   height: 0;
   border: 18px solid transparent;
-  border-top-color: rgba(255, 255, 255, 0.96); /* 吹き出し背景と同じ色 */
+  border-top-color: rgba(255, 255, 255, 0.96);
+  /* 吹き出し背景と同じ色 */
   /*filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.08));*/
 }
 
@@ -178,66 +229,306 @@ canvas {
 }
 
 /* 下部ナビ（ページごとに持つ） */
-.page-bottom{
-  position:absolute; left:50%; transform:translateX(-50%);
+.page-bottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: max(16px, env(safe-area-inset-bottom));
-  width:min(820px, 92vw);
-  display:flex; justify-content:space-between; gap:12px;
+  width: min(820px, 92vw);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
 }
-/*
-.btn{
-  border:1px solid #dcdcdc; background:#fff; color:#111; border-radius:999px;
-  padding:12px 18px; font-size:clamp(18px,3vw,28px); line-height:1;
-  min-width:250px; cursor:pointer;
-  display:inline-flex; align-items:center; gap:8px; justify-content:center;
-}
-.btn.primary{ background:#ff3838; color:#fff; border:none; }
-.btn:focus-visible{ outline:3px solid #4c9ffe; outline-offset:2px; }
-*/
 
-/* Page2 風のフォーム表示 */
-.card{
-  position:absolute; left:50%; transform:translateX(-50%); top: 34%;
-  width:min(820px, 92vw); padding:16px; border-radius:12px;
-  background: rgba(0,0,0,.45); color:#fff;
+/* 右寄せしたいページだけに使う */
+.page-bottom.right {
+  justify-content: flex-end;
 }
-.form-like{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
-.form-like li{ display:grid; grid-template-columns: 1fr auto; align-items:center; gap:12px; }
-.form-like label{ font-weight:700; }
-.fix{ background:#2f66ff; color:#fff; border-radius:8px; padding:4px 10px; font-size:14px; }
-.chip{ display:inline-block; background:#fff; color:#111; padding:6px 10px; border-radius:8px; margin-right:6px; }
-.pill{ display:inline-block; background:#fff; color:#111; padding:8px 12px; border-radius:999px; }
+
+/* ====== 台座（既存） ====== */
+.card {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10%;
+  width: min(820px, 92vw);
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, .45);
+  color: #fff;
+  backdrop-filter: blur(2px);
+  overflow: hidden;
+}
+
+/* ====== リスト全体 ====== */
+.form-like.form-like--sheet {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+
+/* 1行＝ 左ラベル／中央入力／右「修正」 */
+.row {
+  display: grid;
+  grid-template-columns: 135px 1fr 88px;
+  /* 左帯／本体／修正 */
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #fff;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+/* 左側の黒帯ラベル（丸角） */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 8px 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  max-width: 100%;
+}
+
+/* 右の「修正」ボタン（青・角丸） */
+.fix-btn {
+  width: 70px;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: #2f66ff;
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .22);
+  cursor: pointer;
+}
+
+.fix-btn:active {
+  transform: translateY(1px);
+}
+
+.fix-btn:focus-visible {
+  outline: 3px solid #4c9ffe;
+  outline-offset: 2px;
+}
+
+.row-body,
+.row-two,
+.row-date,
+.row-tel {
+  min-width: 0;
+}
+
+/* 中央エリア（行の中身） */
+.row-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* 「姓/名」2分割 */
+.row-two {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 6px;
+}
+
+.row-two .mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 10px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* 入力ピル（白・太文字） */
+.pill-input {
+  height: 40px;
+  width: 100%;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid #e0e2ea;
+  background: #fff;
+  color: #111;
+  font-weight: 800;
+  font-size: 18px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .12) inset, 0 2px 8px rgba(0, 0, 0, .18);
+}
+
+.pill-input.center {
+  text-align: center;
+}
+
+/* 表示用ピル（性別など） */
+.pill-display {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 240px;
+  height: 40px;
+  padding: 0 16px;
+  background: #fff;
+  color: #111;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 20px;
+  border: 1px solid #e0e2ea;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+}
+
+/* 生年月日：3分割 + “年/月/日”の小ラベル */
+.row-date {
+  display: grid;
+  grid-template-columns: 140px auto 92px auto 92px auto;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.unit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 10px;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* 電話番号：3分割 + 罫線風ハイフン */
+.row-tel {
+  display: grid;
+  grid-template-columns: 130px auto 130px auto 130px;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.sep {
+  color: #fff;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  opacity: .95;
+}
+
+/* レスポンシブ（幅が狭い時） */
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+    /* 1列に積む */
+  }
+
+  .row-ctrl {
+    justify-self: end;
+  }
+
+  .badge {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
 
 /* Page3 風の選択リスト */
-.choice-list{
-  position:absolute; left:50%; transform:translateX(-50%); top: 34%;
-  width:min(820px, 92vw); display:grid; gap:12px;
+.choice-list {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 34%;
+  width: min(820px, 92vw);
+  display: grid;
+  gap: 12px;
 }
-.choice{ display:block; }
-.choice input{ display:none; }
-.choice-body{
-  background: rgba(255,255,255,.92); border:2px solid #cfcfcf; border-radius:12px;
-  padding:12px 14px; box-shadow:0 8px 20px rgba(0,0,0,.12);
+
+.choice {
+  display: block;
 }
-.choice.danger .choice-body{ border-color:#ff3a3a; }
-.choice .id{ font-weight:800; font-size:18px; }
-.choice .id.accent{ color:#ff3a3a; }
-.choice .meta{ font-size:14px; color:#333; margin-top:4px; }
-.choice .plan{ font-size:14px; color:#0060d0; text-decoration:underline; cursor:pointer; }
-.newlink{
-  text-align:center; background: rgba(255,255,255,.88); border-radius:12px; padding:12px; font-weight:700;
+
+.choice input {
+  display: none;
+}
+
+.choice-body {
+  background: rgba(255, 255, 255, .92);
+  border: 2px solid #cfcfcf;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+}
+
+.choice.danger .choice-body {
+  border-color: #ff3a3a;
+}
+
+.choice .id {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.choice .id.accent {
+  color: #ff3a3a;
+}
+
+.choice .meta {
+  font-size: 14px;
+  color: #333;
+  margin-top: 4px;
+}
+
+.choice .plan {
+  font-size: 14px;
+  color: #0060d0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.newlink {
+  text-align: center;
+  background: rgba(255, 255, 255, .88);
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 700;
 }
 
 /* Page4 風の縦ボタン */
-.stack{
-  position:absolute; left:50%; transform:translateX(-50%); top: 38%;
-  width:min(520px, 90vw); display:grid; gap:12px;
+.stack {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 38%;
+  width: min(520px, 90vw);
+  display: grid;
+  gap: 12px;
 }
-.pick{
-  border-radius:999px; padding:14px 18px; font-size:18px; background:#fff; border:3px solid #e4e8f5;
+
+.pick {
+  border-radius: 999px;
+  padding: 14px 18px;
+  font-size: 18px;
+  background: #fff;
+  border: 3px solid #e4e8f5;
 }
-.pick.red{ border-color:#ff3a3a; }
-.pick.blue{ border-color:#2451ff; }
+
+.pick.red {
+  border-color: #ff3a3a;
+}
+
+.pick.blue {
+  border-color: #2451ff;
+}
 
 
 /* ============================
@@ -246,132 +537,119 @@ canvas {
    ============================ */
 
 /* 調整しやすいようにトークン化 */
-:root{
+:root {
   --nb-radius: 999px;
   --nb-font-size: 28px;
-  --nb-h: 44px;             /* 高さ */
-  --nb-pad-x: 20px;         /* 左右パディング（矢印分は個別で上書き） */
-  --nb-shadow: 0 6px 16px rgba(0,0,0,.18);
+  --nb-h: 44px;
+  /* 高さ */
+  --nb-pad-x: 20px;
+  /* 左右パディング（矢印分は個別で上書き） */
+  --nb-shadow: 0 6px 16px rgba(0, 0, 0, .18);
 
   /* 戻る */
   --nb-back-border: #222;
-  --nb-back-text:   #222;
-  --nb-back-bg:     #fff;
-  --nb-back-bg-h:   #f4f4f4;
+  --nb-back-text: #222;
+  --nb-back-bg: #fff;
+  --nb-back-bg-h: #f4f4f4;
 
   /* 次へ */
   --nb-next-border: #b00000;
-  --nb-next-bg:   #fff;
+  --nb-next-bg: #fff;
   --nb-next-bg-h: #b00000;
   --nb-next-text: #b00000;
 
   /* 矢印サイズ */
-  --nb-arr-w: 18px;       /* 矢印ブロックの幅 */
-  --nb-arr-h: 12px;       /* 矢印ブロックの高さ */
-  --nb-arr-thick: 2.4px;  /* 山型ラインの太さ */
+  --nb-arr-w: 18px;
+  /* 矢印ブロックの幅 */
+  --nb-arr-h: 12px;
+  /* 矢印ブロックの高さ */
+  --nb-arr-thick: 2.4px;
+  /* 山型ラインの太さ */
 }
 
-/* 共通ベース */
-.btn{
+/* 共通ボタンスタイル */
+.btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--nb-h);
-  padding: 0 var(--nb-pad-x);
-  font-size: var(--nb-font-size);
-  font-weight: 700;
-  line-height: 1;
-  border-radius: var(--nb-radius);
-  border: 5px solid var(--nb-next-border);
+  gap: 10px;
+  height: 48px;
+  min-width: 120px;
+  padding: 0 24px;
+  font-size: 28px;
+  font-weight: 600;
+  border-radius: 30px;
+  border: none;
   cursor: pointer;
-  user-select: none;
-  box-shadow: var(--nb-shadow);
-  transition: background .15s ease, border-color .15s ease, transform .06s ease;
-  /* ボタン全体のクリック感 */
-}
-.btn:active{ transform: translateY(1px); }
-.btn:focus-visible{ outline: 3px solid #4c9ffe; outline-offset: 2px; }
-
-/* ===== 戻る（白＋黒枠＋黒左矢印） ===== */
-.btn.back{
-  background: var(--nb-back-bg);
-  color: var(--nb-back-text);
-  border-color: var(--nb-back-border);
-  padding-inline-start: calc(var(--nb-pad-x) + var(--nb-arr-w) + 8px); /* 左の矢印分を確保 */
-  padding-inline-end: var(--nb-pad-x);
-}
-.btn.back:hover{
-  background: var(--nb-back-bg-h);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s ease;
 }
 
-/* 左向き矢印（CSSのみ：山型） */
-.btn.back::before,
-.btn.back::after{
+/* ===== 戻るボタン ===== */
+.btn.back {
+  background: #fff;
+  color: #222;
+  border: 4px solid #222;
+  padding-left: 52px;
+  /* 左アイコン分余白 */
+}
+
+/* ===== 次へボタン ===== */
+.btn.next {
+  background: #fff;
+  color: #d40000;
+  border: 4px solid #d40000;
+  padding-right: 52px;
+  /* 右アイコン分余白 */
+}
+
+/* ===== アイコンの丸い背景 ===== */
+.btn::before {
   content: "";
   position: absolute;
-  inset-inline-start: 14px;                 /* ボタン左端からの位置 */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: currentColor;
+  /* テキスト色と同じ */
   top: 50%;
-  width: var(--nb-arr-w);
-  height: var(--nb-arr-h);
   transform: translateY(-50%);
-  pointer-events: none;
-}
-/* 山型(‹) を2本の線で描く：上と下 */
-.btn.back::before,
-.btn.back::after{
-  background:
-    linear-gradient(45deg,  transparent calc(50% - var(--nb-arr-thick)), currentColor calc(50% - var(--nb-arr-thick)), currentColor calc(50% + var(--nb-arr-thick)), transparent calc(50% + var(--nb-arr-thick))) left/100% 50% no-repeat,
-    linear-gradient(-45deg, transparent calc(50% - var(--nb-arr-thick)), currentColor calc(50% - var(--nb-arr-thick)), currentColor calc(50% + var(--nb-arr-thick)), transparent calc(50% + var(--nb-arr-thick))) left/100% 50% no-repeat;
-  /* 2本の斜線で < の形に見せる */
-}
-/* 線の位置調整（上段/下段） */
-.btn.back::before{ background-position: left top; }
-.btn.back::after { background-position: left bottom; }
-
-/* ===== 次へ（赤＋白右矢印） ===== */
-.btn.next{
-  background: var(--nb-next-bg);
-  color: var(--nb-next-text);
-  border-color: var(--nb-next-border);
-  padding-inline-start: var(--nb-pad-x);
-  padding-inline-end: calc(var(--nb-pad-x) + var(--nb-arr-w) + 8px); /* 右の矢印分 */
-}
-.btn.next:hover{
-  background: var(--nb-next-bg-h);
-  border-color: var(--nb-next-bg-h);
 }
 
-/* 右向き矢印（CSSのみ：山型） */
-.btn.next::before,
-.btn.next::after{
+/* 戻るアイコンは左 */
+.btn.back::before {
+  left: 8px;
+}
+
+/* 次へアイコンは右 */
+.btn.next::before {
+  right: 8px;
+}
+
+/* ===== 丸の中の矢印（2本線の山形） ===== */
+.btn::after {
   content: "";
   position: absolute;
-  inset-inline-end: 14px;                 /* ボタン右端からの位置 */
+  width: 12px;
+  height: 12px;
   top: 50%;
-  width: var(--nb-arr-w);
-  height: var(--nb-arr-h);
-  transform: translateY(-50%);
-  pointer-events: none;
+  transform: translateY(-50%) rotate(45deg);
+  border: solid;
+  border-width: 0 3px 3px 0;
 }
-/* 2本の斜線で > の形に */
-.btn.next::before,
-.btn.next::after{
-  background:
-    linear-gradient(-45deg, transparent calc(50% - var(--nb-arr-thick)), currentColor calc(50% - var(--nb-arr-thick)), currentColor calc(50% + var(--nb-arr-thick)), transparent calc(50% + var(--nb-arr-thick))) right/100% 50% no-repeat,
-    linear-gradient(45deg,  transparent calc(50% - var(--nb-arr-thick)), currentColor calc(50% - var(--nb-arr-thick)), currentColor calc(50% + var(--nb-arr-thick)), transparent calc(50% + var(--nb-arr-thick))) right/100% 50% no-repeat;
-}
-.btn.next::before{ background-position: right top; }
-.btn.next::after { background-position: right bottom; }
 
-/* レイアウト（下部ナビ例） */
-.page-bottom{
-  position: absolute;
-  left: 50%;
-  bottom: max(16px, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  width: min(820px, 92vw);
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
+/* 戻る（左向き） */
+.btn.back::after {
+  left: 20px;
+  border-color: #fff;
+  transform: translateY(-50%) rotate(135deg);
+}
+
+/* 次へ（右向き） */
+.btn.next::after {
+  right: 20px;
+  border-color: #fff;
+  background: transparent;
+  transform: translateY(-50%) rotate(-45deg);
 }
