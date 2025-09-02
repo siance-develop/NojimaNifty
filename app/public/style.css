@@ -1,27 +1,377 @@
+/* -------------------------------
+   Reset / Base Style
+---------------------------------- */
+
+/* ボックスサイズを border-box に統一 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 余白リセット */
+html, body, h1, h2, h3, h4, h5, h6, p,
+ul, ol, li, figure, figcaption, blockquote,
+dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* リストの装飾を消す */
+ul, ol {
+  list-style: none;
+}
+
+/* デフォルトのフォント設定 */
 body {
-    margin: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Noto Sans JP", system-ui, sans-serif;
+  background: #fff;
+  color: #222;
 }
 
+/* メディア要素の調整 */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 入力・ボタンのフォント継承 */
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+/* ボタンのリセット */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* アンカー装飾を消す */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* レイヤー */
+html, body {
+  height:100%;
+  letter-spacing: 0.03em; /* 日本語・英数字が混ざっても読みやすい */
+  word-break: break-word;
+  -webkit-text-size-adjust: 100%;
+}
+
+body { margin:0; }
+
+/* モーダル全体 */
+.modal {
+  position: fixed;
+  inset: 0; /* top:0; left:0; right:0; bottom:0 と同じ */
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000; /* UIより最前面 */
+}
+
+/* 有効化 */
+.modal.active {
+  display: flex;
+}
+
+/* モーダル中身 */
+.modal-content {
+  border-radius: 12px;
+  padding: 40px 30px;
+  text-align: center;
+  max-width: 900px;
+  width: 90%;
+}
+
+.modal-content h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+#startButton {
+  background: #ff9800;
+  border: 6px solid #fff;
+  padding: 14px 28px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#startButton:hover {
+  background: #e68900;
+}
+
+
+
+
+
+
+
+#app { position:fixed; inset:0; }
+canvas { display:block; width:100%; height:100%; }
+#app {
+  position: fixed;
+  inset: 0;       /* 画面全体を占有 */
+  display: block; /* 空でもブロックとして扱う */
+}
 canvas {
-    display: block;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* UIをcanvas上に */
+#ui { position:absolute; inset:0; pointer-events:none; }
+#ui .page, #ui button, #ui input, #ui a { pointer-events:auto; }
+
+/* ページ枠（中央寄せ、下部ナビ固定のため relative） */
+.page {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+.page.active { display:block; }
+
+.balloon {
+  position: relative;
+  margin: 40px auto;
+  width: min(820px, 92vw);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 16px;
+  padding: clamp(15px, 2.4vw, 20px) clamp(15px, 3vw, 20px);
+  /*box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);*/
+  /*border: 1px solid rgba(0, 0, 0, 0.08);*/
 }
 
-#divInfo {
-    padding: 8px;
-    position: fixed;
-    background: white;
+/* 吹き出しの“しっぽ”（下側に出す） */
+.balloon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -36px; /* balloon の下から飛び出す */
+  width: 0;
+  height: 0;
+  border: 18px solid transparent;
+  border-top-color: rgba(255, 255, 255, 0.96); /* 吹き出し背景と同じ色 */
+  /*filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.08));*/
 }
 
-#button-container {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
+/* テキスト部分 */
+.balloon p {
+  margin: 0;
+  color: #222;
+  line-height: 1.6;
+  font-size: clamp(18px, 2.7vw, 28px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
-#button-container button {
-    padding: 10px 20px;
-    font-size: 16px;
+/* 下部ナビ（ページごとに持つ） */
+.page-bottom{
+  position:absolute; left:50%; transform:translateX(-50%);
+  bottom: max(16px, env(safe-area-inset-bottom));
+  width:min(820px, 92vw);
+  display:flex; justify-content:space-between; gap:12px;
+}
+/*
+.btn{
+  border:1px solid #dcdcdc; background:#fff; color:#111; border-radius:999px;
+  padding:12px 18px; font-size:clamp(18px,3vw,28px); line-height:1;
+  min-width:250px; cursor:pointer;
+  display:inline-flex; align-items:center; gap:8px; justify-content:center;
+}
+.btn.primary{ background:#ff3838; color:#fff; border:none; }
+.btn:focus-visible{ outline:3px solid #4c9ffe; outline-offset:2px; }
+*/
+
+/* Page2 風のフォーム表示 */
+.card{
+  position:absolute; left:50%; transform:translateX(-50%); top: 34%;
+  width:min(820px, 92vw); padding:16px; border-radius:12px;
+  background: rgba(0,0,0,.45); color:#fff;
+}
+.form-like{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.form-like li{ display:grid; grid-template-columns: 1fr auto; align-items:center; gap:12px; }
+.form-like label{ font-weight:700; }
+.fix{ background:#2f66ff; color:#fff; border-radius:8px; padding:4px 10px; font-size:14px; }
+.chip{ display:inline-block; background:#fff; color:#111; padding:6px 10px; border-radius:8px; margin-right:6px; }
+.pill{ display:inline-block; background:#fff; color:#111; padding:8px 12px; border-radius:999px; }
+
+/* Page3 風の選択リスト */
+.choice-list{
+  position:absolute; left:50%; transform:translateX(-50%); top: 34%;
+  width:min(820px, 92vw); display:grid; gap:12px;
+}
+.choice{ display:block; }
+.choice input{ display:none; }
+.choice-body{
+  background: rgba(255,255,255,.92); border:2px solid #cfcfcf; border-radius:12px;
+  padding:12px 14px; box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+.choice.danger .choice-body{ border-color:#ff3a3a; }
+.choice .id{ font-weight:800; font-size:18px; }
+.choice .id.accent{ color:#ff3a3a; }
+.choice .meta{ font-size:14px; color:#333; margin-top:4px; }
+.choice .plan{ font-size:14px; color:#0060d0; text-decoration:underline; cursor:pointer; }
+.newlink{
+  text-align:center; background: rgba(255,255,255,.88); border-radius:12px; padding:12px; font-weight:700;
+}
+
+/* Page4 風の縦ボタン */
+.stack{
+  position:absolute; left:50%; transform:translateX(-50%); top: 38%;
+  width:min(520px, 90vw); display:grid; gap:12px;
+}
+.pick{
+  border-radius:999px; padding:14px 18px; font-size:18px; background:#fff; border:3px solid #e4e8f5;
+}
+.pick.red{ border-color:#ff3a3a; }
+.pick.blue{ border-color:#2451ff; }
+
+
+/* ============================
+   のべこBB ボタン（CSSのみで矢印）
+   SVG/文字矢印を使わず再現
+   ============================ */
+
+/* 調整しやすいようにトークン化 */
+:root{
+  --nb-radius: 999px;
+  --nb-font-size: 28px;
+  --nb-h: 44px;             /* 高さ */
+  --nb-pad-x: 20px;         /* 左右パディング（矢印分は個別で上書き） */
+  --nb-shadow: 0 6px 16px rgba(0,0,0,.18);
+
+  /* 戻る */
+  --nb-back-border: #222;
+  --nb-back-text:   #222;
+  --nb-back-bg:     #fff;
+  --nb-back-bg-h:   #f4f4f4;
+
+  /* 次へ */
+  --nb-next-border: #b00000;
+  --nb-next-bg:   #fff;
+  --nb-next-bg-h: #b00000;
+  --nb-next-text: #b00000;
+
+  /* 矢印サイズ */
+  --nb-arr-w: 18px;       /* 矢印ブロックの幅 */
+  --nb-arr-h: 12px;       /* 矢印ブロックの高さ */
+  --nb-arr-thick: 2.4px;  /* 山型ラインの太さ */
+}
+
+/* 共通ベース */
+.btn{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--nb-h);
+  padding: 0 var(--nb-pad-x);
+  font-size: var(--nb-font-size);
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--nb-radius);
+  border: 5px solid var(--nb-next-border);
+  cursor: pointer;
+  user-select: none;
+  box-shadow: var(--nb-shadow);
+  transition: background .15s ease, border-color .15s ease, transform .06s ease;
+  /* ボタン全体のクリック感 */
+}
+.btn:active{ transform: translateY(1px); }
+.btn:focus-visible{ outline: 3px solid #4c9ffe; outline-offset: 2px; }
+
+/* ===== 戻る（白＋黒枠＋黒左矢印） ===== */
+.btn.back{
+  background: var(--nb-back-bg);
+  color: var(--nb-back-text);
+  border-color: var(--nb-back-border);
+  padding-inline-start: calc(var(--nb-pad-x) + var(--nb-arr-w) + 8px); /* 左の矢印分を確保 */
+  padding-inline-end: var(--nb-pad-x);
+}
+.btn.back:hover{
+  background: var(--nb-back-bg-h);
+}
+
+/* 左向き矢印（CSSのみ：山型） */
+.btn.back::before,
+.btn.back::after{
+  content: "";
+  position: absolute;
+  inset-inline-start: 14px;                 /* ボタン左端からの位置 */
+  top: 50%;
+  width: var(--nb-arr-w);
+  height: var(--nb-arr-h);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+/* 山型(‹) を2本の線で描く：上と下 */
+.btn.back::before,
+.btn.back::after{
+  background:
+    linear-gradient(45deg,  transparent calc(50% - var(--nb-arr-thick)), currentColor calc(50% - var(--nb-arr-thick)), currentColor calc(50% + var(--nb-arr-thick)), transparent calc(50% + var(--nb-arr-thick))) left/100% 50% no-repeat,
+    linear-gradient(-45deg, transparent calc(50% - var(--nb-arr-thick)), currentColor calc(50% - var(--nb-arr-thick)), currentColor calc(50% + var(--nb-arr-thick)), transparent calc(50% + var(--nb-arr-thick))) left/100% 50% no-repeat;
+  /* 2本の斜線で < の形に見せる */
+}
+/* 線の位置調整（上段/下段） */
+.btn.back::before{ background-position: left top; }
+.btn.back::after { background-position: left bottom; }
+
+/* ===== 次へ（赤＋白右矢印） ===== */
+.btn.next{
+  background: var(--nb-next-bg);
+  color: var(--nb-next-text);
+  border-color: var(--nb-next-border);
+  padding-inline-start: var(--nb-pad-x);
+  padding-inline-end: calc(var(--nb-pad-x) + var(--nb-arr-w) + 8px); /* 右の矢印分 */
+}
+.btn.next:hover{
+  background: var(--nb-next-bg-h);
+  border-color: var(--nb-next-bg-h);
+}
+
+/* 右向き矢印（CSSのみ：山型） */
+.btn.next::before,
+.btn.next::after{
+  content: "";
+  position: absolute;
+  inset-inline-end: 14px;                 /* ボタン右端からの位置 */
+  top: 50%;
+  width: var(--nb-arr-w);
+  height: var(--nb-arr-h);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+/* 2本の斜線で > の形に */
+.btn.next::before,
+.btn.next::after{
+  background:
+    linear-gradient(-45deg, transparent calc(50% - var(--nb-arr-thick)), currentColor calc(50% - var(--nb-arr-thick)), currentColor calc(50% + var(--nb-arr-thick)), transparent calc(50% + var(--nb-arr-thick))) right/100% 50% no-repeat,
+    linear-gradient(45deg,  transparent calc(50% - var(--nb-arr-thick)), currentColor calc(50% - var(--nb-arr-thick)), currentColor calc(50% + var(--nb-arr-thick)), transparent calc(50% + var(--nb-arr-thick))) right/100% 50% no-repeat;
+}
+.btn.next::before{ background-position: right top; }
+.btn.next::after { background-position: right bottom; }
+
+/* レイアウト（下部ナビ例） */
+.page-bottom{
+  position: absolute;
+  left: 50%;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(820px, 92vw);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
 }

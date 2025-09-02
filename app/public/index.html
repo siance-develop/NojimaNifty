@@ -1,33 +1,180 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>three-vrm example</title>
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-        <link rel="stylesheet" href="style.css" />
-    </head>
 
-    <body>
+<head>
+    <meta charset="utf-8" />
+    <title>three-vrm example</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="style.css" />
+</head>
 
-        <div id="button-container">
-            <button id="yesButton">はい</button>
-            <button id="noButton">いいえ</button>
+<body>
+    <!-- 初期モーダル -->
+    <div id="start-modal" class="modal active">
+        <div class="modal-content">
+            <h1>@nifty光 契約受付</h1>
+            <button id="startButton">ご案内開始</button>
         </div>
+    </div>
+    <div id="app">
+        <!-- canvas は main.js が append -->
+        <div id="ui">
+            <!-- Page 1 -->
+            <section class="page active" id="page1">
+                <div class="balloon">
+                    <p>
+                        @nifty光のお申込みありがとうございます。<br>
+                        まずは@niftyからのご契約前の重要事項の説明を動画でご案内します。<br>
+                        「視聴開始」を押してください。
+                    </p>
+                </div>
+                <div class="page-bottom">
+                    <button class="btn next" data-next="page2">視聴開始</button>
+                </div>
+            </section>
 
-        <script type="importmap">
-            {
-                "imports": {
-                    "fflate": "https://cdn.jsdelivr.net/npm/fflate@0.7.4/esm/browser.js",
-                    "three": "https://cdn.jsdelivr.net/npm/three@0.177.0/build/three.module.js",
-                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/",
-                    "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3/lib/three-vrm.module.min.js"
-                }
-            }
-        </script>
+            <!-- Page 2 -->
+            <section class="page" id="page2" aria-hidden="true">
+                <div class="balloon">
+                    <p>
+                        動画のご視聴ありがとうございます。<br>
+                        従業員がノジマのアプリ会員情報からお客様情報を反映させました。<br>
+                        誤りがなければ「次へ」を押してください。
+                    </p>
+                </div>
+                <!-- 例: 顧客情報カード -->
+                <div class="card">
+                    <ul class="form-like">
+                        <li><label>お申込者名（カナ）<span class="fix">修正</span></label>
+                            <div><span class="chip">ミホン</span><span class="chip">タロウ</span></div>
+                        </li>
+                        <li><label>お申込者名（漢字）<span class="fix">修正</span></label>
+                            <div><span class="chip">見本</span><span class="chip">太郎</span></div>
+                        </li>
+                        <li><label>性別<span class="fix">修正</span></label>
+                            <div class="pill">男性</div>
+                        </li>
+                        <li><label>生年月日<span class="fix">修正</span></label>
+                            <div class="pill">1982 年 6 月 23 日</div>
+                        </li>
+                        <li><label>電話番号<span class="fix">修正</span></label>
+                            <div class="pill">080 − 1234 − 5678</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="page-bottom">
+                    <button class="btn back" data-prev="page1">戻る</button>
+                    <button class="btn next" data-next="page3">次へ</button>
+                </div>
+            </section>
 
-        <script src="main.js" type="module"></script>
-    </body>
+            <!-- Page 3 -->
+            <section class="page" id="page3" aria-hidden="true">
+                <div class="balloon">
+                    <p>
+                        お客様情報から現在ご利用中の@nifty IDが見つかりました。<br>
+                        今回ご利用になるIDを選んでください。
+                    </p>
+                </div>
+                <div class="choice-list">
+                    <label class="choice">
+                        <input type="radio" name="niftyid" checked>
+                        <div class="choice-body">
+                            <div class="id">RKT39256</div>
+                            <div class="meta">@nifty IDメールアドレス example@nifty.com／ご入会日 2020年4月12日</div>
+                            <a class="plan">月額課金 なし／詳細</a>
+                        </div>
+                    </label>
+                    <label class="choice danger">
+                        <input type="radio" name="niftyid">
+                        <div class="choice-body">
+                            <div class="id accent">NOS39256</div>
+                            <div class="meta">@nifty IDメールアドレス example@nifty.com／ご入会日 2023年6月20日</div>
+                            <a class="plan">月額課金 あり／詳細</a>
+                        </div>
+                    </label>
+                    <div class="newlink">@nifty IDを新規登録する</div>
+                </div>
+                <div class="page-bottom">
+                    <button class="btn back" data-prev="page2">戻る</button>
+                    <button class="btn next" data-next="page4">次へ</button>
+                </div>
+            </section>
+
+            <!-- Page 4 -->
+            <section class="page" id="page4" aria-hidden="true">
+                <div class="balloon">
+                    <p>@niftyからお得なお知らせメールを希望されますか？</p>
+                </div>
+                <div class="stack">
+                    <button class="pick red">希望する</button>
+                    <button class="pick blue">希望しない</button>
+                </div>
+                <div class="page-bottom">
+                    <button class="btn back" data-prev="page3">戻る</button>
+                    <button class="btn next" data-next="pageComplete">次へ</button>
+                </div>
+            </section>
+
+            <!-- 完了 -->
+            <section class="page" id="pageComplete" aria-hidden="true">
+                <div class="balloon">
+                    <p>お申込みありがとうございました。受付が完了しました。</p>
+                </div>
+                <div class="page-bottom">
+                    <button class="btn back" data-prev="page1">最初へ戻る</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- three.js importmap -->
+    <script type="importmap">
+    {
+      "imports": {
+        "fflate": "https://cdn.jsdelivr.net/npm/fflate@0.7.4/esm/browser.js",
+        "three": "https://cdn.jsdelivr.net/npm/three@0.177.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/",
+        "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3/lib/three-vrm.module.min.js"
+      }
+    }
+  </script>
+
+    <script src="main.js" type="module"></script>
+
+    <script>
+        // ページごとのアニメ割当
+        const ACTION_FOR_PAGE = {
+            page1: 'idle',
+            page2: 'yes',
+            page3: 'no',
+            page4: 'yes',
+            pageComplete: 'idle',
+        };
+
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => {
+                const active = (p.id === id);
+                p.classList.toggle('active', active);
+                p.setAttribute('aria-hidden', !active);
+            });
+            // VRMアニメ再生
+            const act = ACTION_FOR_PAGE[id] || 'idle';
+            if (window.viewer?.playAction) window.viewer.playAction(act);
+        }
+
+        document.addEventListener('click', (e) => {
+            const next = e.target.closest('[data-next]');
+            const prev = e.target.closest('[data-prev]');
+            if (next) showPage(next.dataset.next);
+            if (prev) showPage(prev.dataset.prev);
+        });
+
+        // 初期表示
+        showPage('page1');
+    </script>
+
+</body>
+
 </html>
