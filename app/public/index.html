@@ -26,205 +26,283 @@
             <div id="yt-error" class="yt-error" hidden></div>
         </div>
     </div>
-    <div id="app">
-        <!-- canvas は main.js が append -->
-        <div id="ui">
-            <!-- Page 1 -->
-            <section class="page active" id="page1">
-                <div class="balloon">
-                    <p>
-                        @nifty光のお申込みありがとうございます。<br>
-                        まずは@niftyからのご契約前の重要事項の説明を動画でご案内します。<br>
-                        「視聴開始」を押してください。
-                    </p>
-                </div>
-                <div class="page-bottom right">
-                    <button class="btn next" data-next="page2" data-youtube="6FRlR3EwpYM">視聴開始</button>
-                </div>
-            </section>
-
-            <!-- Page 2 -->
-            <section class="page" id="page2" aria-hidden="true">
-                <div class="balloon">
-                    <p>
-                        動画のご視聴ありがとうございます。<br>
-                        従業員がノジマのアプリ会員情報からお客様情報を反映させました。<br>
-                        誤りがなければ「次へ」を押してください。
-                    </p>
-                </div>
-                <!-- 例: 顧客情報カード -->
-                <div class="card">
-                    <ul class="form-like form-like--sheet">
-
-                        <!-- お申込者名（カナ） -->
-                        <li class="row">
-                            <div class="row-label">
-                                <span class="badge">お申込者名（カナ）</span>
-                            </div>
-
-                            <div class="row-body row-two">
-                                <label class="mini">姓</label>
-                                <input class="pill-input" id="nameKanaFamily" name="nameKanaFamily" type="text"
-                                    inputmode="kana" value="ミホン" />
-                                <label class="mini">名</label>
-                                <input class="pill-input" id="nameKanaGiven" name="nameKanaGiven" type="text"
-                                    inputmode="kana" value="タロウ" />
-                            </div>
-
-                            <div class="row-ctrl">
-                                <button class="fix-btn" type="button">修正</button>
-                            </div>
-                        </li>
-
-                        <!-- お申込者名（漢字） -->
-                        <li class="row">
-                            <div class="row-label">
-                                <span class="badge">お申込者名（漢字）</span>
-                            </div>
-
-                            <div class="row-body row-two">
-                                <label class="mini">姓</label>
-                                <input class="pill-input" id="nameKanjiFamily" name="nameKanjiFamily" type="text"
-                                    value="見本" />
-                                <label class="mini">名</label>
-                                <input class="pill-input" id="nameKanjiGiven" name="nameKanjiGiven" type="text"
-                                    value="太郎" />
-                            </div>
-
-                            <div class="row-ctrl">
-                                <button class="fix-btn" type="button">修正</button>
-                            </div>
-                        </li>
-
-                        <!-- 性別（表示ピル） -->
-                        <li class="row">
-                            <div class="row-label">
-                                <span class="badge">性別</span>
-                            </div>
-
-                            <div class="row-body">
-                                <div class="pill-display">男性</div>
-                            </div>
-
-                            <div class="row-ctrl">
-                                <button class="fix-btn" type="button">修正</button>
-                            </div>
-                        </li>
-
-                        <!-- 生年月日（3分割 + 年月日ラベル） -->
-                        <li class="row">
-                            <div class="row-label">
-                                <span class="badge">生年月日</span>
-                            </div>
-
-                            <div class="row-body row-date">
-                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
-                                    maxlength="4" value="1982" />
-                                <span class="unit">年</span>
-                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
-                                    maxlength="2" value="6" />
-                                <span class="unit">月</span>
-                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
-                                    maxlength="2" value="23" />
-                                <span class="unit">日</span>
-                            </div>
-
-                            <div class="row-ctrl">
-                                <button class="fix-btn" type="button">修正</button>
-                            </div>
-                        </li>
-
-                        <!-- 電話番号（3分割 + 罫線風ハイフン） -->
-                        <li class="row">
-                            <div class="row-label">
-                                <span class="badge">電話番号</span>
-                            </div>
-
-                            <div class="row-body row-tel">
-                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
-                                    maxlength="4" value="080" />
-                                <span class="sep">—</span>
-                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
-                                    maxlength="4" value="1234" />
-                                <span class="sep">—</span>
-                                <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
-                                    maxlength="4" value="5678" />
-                            </div>
-
-                            <div class="row-ctrl">
-                                <button class="fix-btn" type="button">修正</button>
-                            </div>
-                        </li>
-
-                    </ul>
-                </div>
-
-                <div class="page-bottom">
-                    <button class="btn back" data-prev="page1">戻る</button>
-                    <button class="btn next" data-next="page3">次へ</button>
-                </div>
-            </section>
-
-            <!-- Page 3 -->
-            <section class="page" id="page3" aria-hidden="true">
-                <div class="balloon">
-                    <p>
-                        お客様情報から現在ご利用中の@nifty IDが見つかりました。<br>
-                        今回ご利用になるIDを選んでください。
-                    </p>
-                </div>
-                <div class="choice-list">
-                    <label class="choice">
-                        <input type="radio" name="niftyid" checked>
-                        <div class="choice-body">
-                            <div class="id">RKT39256</div>
-                            <div class="meta">@nifty IDメールアドレス example@nifty.com／ご入会日 2020年4月12日</div>
-                            <a class="plan">月額課金 なし／詳細</a>
+    <div id="stage-wrap">
+        <div id="app">
+            <!-- canvas は main.js が append -->
+            <div id="ui">
+                <div id="stage" style="width:768px; height:1024px;">
+                    <!-- Page 1 -->
+                    <section class="page active" id="page1">
+                        <div class="balloon">
+                            <p>
+                                @nifty光のお申込みありがとうございます。<br>
+                                まずは@niftyからのご契約前の重要事項の説明を動画でご案内します。<br>
+                                「視聴開始」を押してください。
+                            </p>
                         </div>
-                    </label>
-                    <label class="choice danger">
-                        <input type="radio" name="niftyid">
-                        <div class="choice-body">
-                            <div class="id accent">NOS39256</div>
-                            <div class="meta">@nifty IDメールアドレス example@nifty.com／ご入会日 2023年6月20日</div>
-                            <a class="plan">月額課金 あり／詳細</a>
+                        <div class="page-bottom right">
+                            <button class="btn next" data-next="page2" data-youtube="6FRlR3EwpYM">視聴開始</button>
                         </div>
-                    </label>
-                    <div class="newlink">@nifty IDを新規登録する</div>
-                </div>
-                <div class="page-bottom">
-                    <button class="btn back" data-prev="page2">戻る</button>
-                    <button class="btn next" data-next="page4">次へ</button>
-                </div>
-            </section>
+                    </section>
 
-            <!-- Page 4 -->
-            <section class="page" id="page4" aria-hidden="true">
-                <div class="balloon">
-                    <p>@niftyからお得なお知らせメールを希望されますか？</p>
-                </div>
-                <div class="stack">
-                    <button class="pick red">希望する</button>
-                    <button class="pick blue">希望しない</button>
-                </div>
-                <div class="page-bottom">
-                    <button class="btn back" data-prev="page3">戻る</button>
-                    <button class="btn next" data-next="pageComplete">次へ</button>
-                </div>
-            </section>
+                    <!-- Page 2 -->
+                    <section class="page" id="page2" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                動画のご視聴ありがとうございます。<br>
+                                従業員がノジマのアプリ会員情報からお客様情報を反映させました。<br>
+                                誤りがなければ「次へ」を押してください。
+                            </p>
+                        </div>
+                        <!-- 例: 顧客情報カード -->
+                        <div class="card">
+                            <ul class="form-like form-like--sheet">
 
-            <!-- 完了 -->
-            <section class="page" id="pageComplete" aria-hidden="true">
-                <div class="balloon">
-                    <p>お申込みありがとうございました。受付が完了しました。</p>
+                                <!-- お申込者名（カナ） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">お申込者名（カナ）</span>
+                                    </div>
+
+                                    <div class="row-body row-two">
+                                        <label class="mini">姓</label>
+                                        <input class="pill-input" id="nameKanaFamily" name="nameKanaFamily" type="text"
+                                            inputmode="kana" value="ミホン" readonly />
+                                        <label class="mini">名</label>
+                                        <input class="pill-input" id="nameKanaGiven" name="nameKanaGiven" type="text"
+                                            inputmode="kana" value="タロウ" readonly />
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                                <!-- お申込者名（漢字） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">お申込者名（漢字）</span>
+                                    </div>
+
+                                    <div class="row-body row-two">
+                                        <label class="mini">姓</label>
+                                        <input class="pill-input" id="nameKanjiFamily" name="nameKanjiFamily"
+                                            type="text" value="見本" readonly />
+                                        <label class="mini">名</label>
+                                        <input class="pill-input" id="nameKanjiGiven" name="nameKanjiGiven" type="text"
+                                            value="太郎" readonly />
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                                <!-- 性別（表示ピル） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">性別</span>
+                                    </div>
+
+                                    <div class="row-body">
+                                        <div class="pill-display">男性</div>
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                                <!-- 生年月日（3分割 + 年月日ラベル） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">生年月日</span>
+                                    </div>
+
+                                    <div class="row-body row-date">
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="4" value="1982" readonly />
+                                        <span class="unit">年</span>
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="2" value="6" readonly />
+                                        <span class="unit">月</span>
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="2" value="23" readonly />
+                                        <span class="unit">日</span>
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                                <!-- 電話番号（3分割 + 罫線風ハイフン） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">電話番号</span>
+                                    </div>
+
+                                    <div class="row-body row-tel">
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="4" value="080" readonly />
+                                        <span class="sep">—</span>
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="4" value="1234" readonly />
+                                        <span class="sep">—</span>
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="4" value="5678" readonly />
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page1">戻る</button>
+                            <button class="btn next" data-next="page3">次へ</button>
+                        </div>
+                    </section>
+
+                    <!-- Page 3 -->
+                    <section class="page" id="page3" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                お客様情報から現在ご利用中の@nifty IDが見つかりました。<br>
+                                今回ご利用になるIDを選んでください。
+                            </p>
+                        </div>
+
+                        <!-- 例: 顧客情報カード -->
+                        <div class="card">
+                            <!-- 1件目 -->
+                            <div class="idcard-row">
+                                <label class="idcard">
+                                    <input type="radio" name="niftyId" value="RKT39256-1" checked>
+                                    <div class="idcard__body">
+                                        <div class="idcard__radio"></div>
+                                        <div class="idcard__main">
+                                            <div class="idcard__title">RKT39256</div>
+                                            <div class="idcard__meta">
+                                                <div>@nifty IDメールアドレス</div>
+                                                <div class="idcard__meta-value">example@nifty.com</div>
+                                                <div>ご入会日</div>
+                                                <div class="idcard__meta-value">2023年4月12日</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="idcard__side">
+                                    <div class="plan">
+                                        <div class="plan__title">月額課金</div>
+                                        <div class="plan__value plan__value--none">なし</div>
+                                        <button type="button" class="plan__detail">詳細</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2件目 -->
+                            <div class="idcard-row">
+                                <label class="idcard">
+                                    <input type="radio" name="niftyId" value="RKT39256-2">
+                                    <div class="idcard__body">
+                                        <div class="idcard__radio"></div>
+                                        <div class="idcard__main">
+                                            <div class="idcard__title">NOS39256</div>
+                                            <div class="idcard__meta">
+                                                <div>@nifty IDメールアドレス</div>
+                                                <div class="idcard__meta-value">example@nifty.com</div>
+                                                <div>ご入会日</div>
+                                                <div class="idcard__meta-value">2023年6月20日</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="idcard__side">
+                                    <div class="plan">
+                                        <div class="plan__title">月額課金</div>
+                                        <div class="plan__value plan__value--has">あり</div>
+                                        <button type="button" class="plan__detail">詳細</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 新規登録 -->
+                            <div class="idcard-row">
+                                <label class="idcard idcard--new">
+                                    <input type="radio" name="niftyId" value="__new__">
+                                    <div class="idcard__body">
+                                        <div class="idcard__radio"></div>
+                                        <div class="idcard__main">
+                                            <div class="idcard__title idcard__title--new">@nifty IDを新規登録する</div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page2">戻る</button>
+                            <button class="btn next" data-next="page4">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 4 -->
+                    <section class="page" id="page4" aria-hidden="true">
+                        <div class="balloon">
+                            <p>@niftyからお得なお知らせメールを希望されますか？</p>
+                        </div>
+                        <div class="stack">
+                            <button class="pick red">希望する</button>
+                            <button class="pick blue">希望しない</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page3">戻る</button>
+                            <button class="btn next" data-next="pageComplete">次へ</button>
+                        </div>
+                    </section>
+
+                    <!-- 完了 -->
+                    <section class="page" id="pageComplete" aria-hidden="true">
+                        <div class="balloon">
+                            <p>お申込みありがとうございました。受付が完了しました。</p>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page1">最初へ戻る</button>
+                        </div>
+                    </section>
                 </div>
-                <div class="page-bottom">
-                    <button class="btn back" data-prev="page1">最初へ戻る</button>
-                </div>
-            </section>
+            </div>
         </div>
     </div>
 
+    <script>
+        function fit() {
+            const baseW = 768, baseH = 1024; // タブレット縦向き基準
+            const w = window.innerWidth, h = window.innerHeight;
+            const s = Math.min(w / baseW, h / baseH);
+
+            const stage = document.getElementById('stage');
+            const wrap = document.getElementById('stage-wrap');
+
+            // スケーリング
+            stage.style.transform = `scale(${s})`;
+            stage.style.transformOrigin = 'top left';
+
+            // ラッパを画面サイズにフィット
+            wrap.style.width = `${w}px`;
+            wrap.style.height = `${h}px`;
+
+            // 中央寄せ（上下左右の余白を自動調整）
+            stage.style.marginLeft = `${(w - baseW * s) / 2}px`;
+            stage.style.marginTop = `${(h - baseH * s) / 2}px`;
+        }
+
+        addEventListener('resize', fit);
+        fit();
+    </script>
     <!-- three.js importmap -->
     <script type="importmap">
     {
