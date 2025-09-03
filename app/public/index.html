@@ -17,6 +17,15 @@
             <button id="startButton">ご案内開始</button>
         </div>
     </div>
+    <!-- YouTube再生モーダル -->
+    <div id="yt-modal" class="modal">
+        <div class="modal-content yt">
+            <div class="yt-frame">
+                <div id="yt-player"></div>
+            </div>
+            <div id="yt-error" class="yt-error" hidden></div>
+        </div>
+    </div>
     <div id="app">
         <!-- canvas は main.js が append -->
         <div id="ui">
@@ -30,7 +39,7 @@
                     </p>
                 </div>
                 <div class="page-bottom right">
-                    <button class="btn next" data-next="page2">視聴開始</button>
+                    <button class="btn next" data-next="page2" data-youtube="6FRlR3EwpYM">視聴開始</button>
                 </div>
             </section>
 
@@ -261,7 +270,95 @@
         // 初期表示
         showPage('page1');
     </script>
+    <script>
+        /* ==========================================================
+           YouTube 再生（エラーに強い版）
+           ========================================================== */
+        let ytPlayer = null;
+        let ytApiLoaded = false;
 
+        function loadYouTubeAPI() {
+            return new Promise((resolve) => {
+                if (window.YT && window.YT.Player) { ytApiLoaded = true; resolve(); return; }
+                const tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                window.onYouTubeIframeAPIReady = () => { ytApiLoaded = true; resolve(); };
+                document.head.appendChild(tag);
+            });
+        }
+
+        function showYTError(msg) {
+            const box = document.getElementById('yt-error');
+            if (!box) return;
+            box.textContent = msg;
+            box.hidden = false;
+        }
+
+        async function openYTModalAndPlay(videoId) {
+            const modal = document.getElementById('yt-modal');
+            modal.classList.add('active');
+            showYTError(""); // 初期化
+            const errBox = document.getElementById('yt-error'); if (errBox) errBox.hidden = true;
+
+            await loadYouTubeAPI();
+
+            const playerOptions = {
+                playerVars: {
+                    autoplay: 1,
+                    rel: 0,
+                    playsinline: 1,
+                    modestbranding: 1
+                },
+                events: {
+                    onReady: () => {
+                        try { ytPlayer.loadVideoById(videoId); } catch (e) { showYTError("プレイヤー初期化に失敗しました。"); }
+                    },
+                    onStateChange: (e) => {
+                        // 再生終了
+                        if (e.data === YT.PlayerState.ENDED) {
+                            closeYTModalAndGoNext();
+                        }
+                    },
+                    onError: (e) => {
+                        const map = {
+                            2: "不正な動画IDです。",
+                            5: "このブラウザで再生できません（HTML5プレイヤーエラー）。",
+                            100: "動画が見つからないか、非公開です。",
+                            101: "動画の埋め込みが許可されていません。",
+                            150: "動画の埋め込みが許可されていません。"
+                        };
+                        showYTError(map[e.data] || "再生中にエラーが発生しました。");
+                        console.error("YouTube error code:", e.data);
+                    }
+                }
+            };
+
+            if (!ytPlayer) {
+                ytPlayer = new YT.Player('yt-player', playerOptions);
+            } else {
+                try { ytPlayer.loadVideoById(videoId); } catch (e) {
+                    // プレイヤーが壊れていたら作り直し
+                    ytPlayer.destroy?.();
+                    ytPlayer = new YT.Player('yt-player', playerOptions);
+                }
+            }
+        }
+
+        function closeYTModalAndGoNext() {
+            const modal = document.getElementById('yt-modal');
+            modal.classList.remove('active');
+            try { ytPlayer && ytPlayer.stopVideo(); } catch (e) { }
+            showPage('page2');
+        }
+
+        // 視聴開始ボタンのクリックをフック
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-youtube]');
+            if (!btn) return;
+            e.preventDefault();  // すぐにページ遷移させない
+            openYTModalAndPlay(btn.dataset.youtube);
+        });
+    </script>
 </body>
 
 </html>
