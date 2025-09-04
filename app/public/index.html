@@ -250,20 +250,103 @@
                         </div>
                     </section>
                     <!-- Page 4 -->
-                    <section class="page" id="page4" aria-hidden="true">
+                    <section class="page" id="page4" aria-hidden="true" data-choice-group="mail_optin">
                         <div class="balloon">
                             <p>@niftyからお得なお知らせメールを希望されますか？</p>
                         </div>
-                        <div class="stack">
-                            <button class="pick red">希望する</button>
-                            <button class="pick blue">希望しない</button>
+                        <div class="choices" role="group" aria-label="メール受信の希望">
+                            <button class="choice-btn" data-value="yes" aria-pressed="false">希望する</button>
+                            <button class="choice-btn" data-value="no" aria-pressed="false">希望しない</button>
                         </div>
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page3">戻る</button>
-                            <button class="btn next" data-next="pageComplete">次へ</button>
+                            <button id="nextBtn" class="btn next is-hidden" data-next="page5">次へ</button>
                         </div>
                     </section>
+                    <!-- Page 5 -->
+                    <section class="page" id="page5" aria-hidden="true" data-choice-group="contract_doc_method">
+                        <div class="balloon">
+                            <p>@niftyの契約書面の確認方法を<br>選んでください</p>
+                        </div>
+                        <div class="choices" role="group" aria-label="契約書面の確認方法">
+                            <button class="choice-btn" data-value="yes" aria-pressed="false">Webページで確認する</button>
+                            <button class="choice-btn" data-value="no" aria-pressed="false">書面で確認する</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page4">戻る</button>
+                            <button id="nextBtn" class="btn next is-hidden" data-next="page6">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 6 -->
+                    <section class="page" id="page6" aria-hidden="true" data-choice-group="contact_time">
+                        <div class="balloon">
+                            <p>@niftyから契約内容の確認や工事日の調整でお電話を差し上げることがあります。<br>ご希望の連絡時間帯を選んでください。</p>
+                        </div>
+                        <div class="choices grid-2" role="group" aria-label="連絡希望時間帯">
+                            <button class="choice-btn" data-value="weekday_am" aria-pressed="false">平日午前</button>
+                            <button class="choice-btn" data-value="weekday_pm" aria-pressed="false">平日午後</button>
+                            <button class="choice-btn" data-value="holiday_am" aria-pressed="false">土休日午前</button>
+                            <button class="choice-btn" data-value="holiday_pm" aria-pressed="false">土休日午後</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page5">戻る</button>
+                            <button id="nextBtn" class="btn next is-hidden" data-next="page7">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 7 -->
+                    <section class="page" id="page7" aria-hidden="true" data-choice-group="payment_method"
+                        data-show-staff-bubble="false">
+                        <div class="balloon">
+                            <p>＠nifty光のお支払い方法を選んでください。<br>本日、ノジマ店頭で値引きキャンペーンを適用する場合は「クレジットカード」を選択してください。</p>
+                        </div>
+                        <div class="choices" role="group" aria-label="支払い方法">
+                            <!-- ★ 吹き出し（常時表示） -->
+                            <div class="staff-bubble" aria-live="polite">従業員選択済み</div>
+                            <!-- クレジットカード -->
+                            <button class="choice-btn" data-value="credit" aria-pressed="false">
+                                クレジットカード
+                            </button>
 
+                            <!-- 口座振替（注意文付き） -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="bank_debit"
+                                aria-pressed="false">
+                                口座振替
+                                <span class="sub">※毎月口座振替決済管理費220円が別途かかります</span>
+                            </button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page6">戻る</button>
+                            <button id="nextBtn" class="btn next is-hidden" data-next="page8">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 8 -->
+                    <section class="page" id="page8" aria-hidden="true" data-choice-group="service_address_relation">
+                        <div class="balloon">
+                            <p>＠nifty光をご利用になる住所はどちらですか？</p>
+                        </div>
+                        <div class="choices" role="group" aria-label="ご利用住所の選択">
+                            <button class="choice-btn" data-value="same" aria-pressed="false">申込者住所と同じ</button>
+                            <button class="choice-btn" data-value="different" aria-pressed="false">申込者住所と異なる</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page7">戻る</button>
+                            <button id="nextBtn" class="btn next is-hidden" data-next="page9">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 9 -->
+                    <section class="page" id="page9" aria-hidden="true" data-choice-group="ntt_holder_relation">
+                        <div class="balloon">
+                            <p>＠nifty光のお申込者は<br>回線名義人と同じですか？</p>
+                        </div>
+                        <div class="choices" role="group" aria-label="名義人一致の選択">
+                            <button class="choice-btn" data-value="same" data-next-page="15" aria-pressed="false">申込者と同じ</button>
+                            <button class="choice-btn" data-value="different" data-next-page="10" aria-pressed="false">申込者と異なる</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page8">戻る</button>
+                            <button id="nextBtn" class="btn next is-hidden" data-next="pageComplete">次へ</button>
+                        </div>
+                    </section>
                     <!-- 完了 -->
                     <section class="page" id="pageComplete" aria-hidden="true">
                         <div class="balloon">
@@ -437,6 +520,7 @@
             openYTModalAndPlay(btn.dataset.youtube);
         });
     </script>
+
 </body>
 
 </html>

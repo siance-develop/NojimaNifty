@@ -467,6 +467,75 @@ const modal = document.getElementById('start-modal');
 const startBtn = document.getElementById('startButton');
 
 startBtn.addEventListener('click', () => {
-  modal.classList.remove('active');   // モーダルを閉じる
-  showPage('page1');                  // 最初のページを表示
+    modal.classList.remove('active');   // モーダルを閉じる
+    showPage('page1');                  // 最初のページを表示
 });
+
+
+
+/**
+ * グローバルに選択状態を保持（送信や遷移で使える）
+ * 例）window.choiceState.mail_optin === "yes"
+ */
+window.choiceState = window.choiceState || {};
+
+(function () {
+    // クリック（とEnter/Space）を全体委譲で拾う
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.choice-btn');
+        if (!btn) return;
+
+        const page = btn.closest('.page');
+        if (!page) return;
+
+        const group = page.dataset.choiceGroup || page.id || 'default';
+        const buttons = page.querySelectorAll('.choice-btn');
+
+        // すべて解除
+        buttons.forEach(b => {
+            b.classList.remove('is-selected');
+            b.setAttribute('aria-pressed', 'false');
+        });
+
+        // 選択付与
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-pressed', 'true');
+
+        // 値の保存（グローバル & hidden 連携）
+        const value = btn.dataset.value ?? btn.value ?? btn.textContent.trim();
+        window.choiceState[group] = value;
+
+        const hidden = page.querySelector('input[type="hidden"][name="' + group + '"]');
+        if (hidden) hidden.value = value;
+
+        // 次へを表示
+        const next = page.querySelector('.btn.next');
+        if (next) next.classList.remove('is-hidden');
+    });
+
+    // キーボード操作（Enter/Space）
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const btn = e.target.closest('.choice-btn');
+        if (!btn) return;
+        e.preventDefault();
+        btn.click();
+    });
+
+    // ページ復元用（戻ってきた時に選択を再反映したい場合）
+    window.applyChoiceSelection = function (pageEl) {
+        const page = typeof pageEl === 'string' ? document.querySelector(pageEl) : pageEl;
+        if (!page) return;
+        const group = page.dataset.choiceGroup || page.id || 'default';
+        const saved = window.choiceState[group];
+        if (!saved) return;
+
+        const target = page.querySelector('.choice-btn[data-value="' + saved + '"]');
+        if (target) target.click(); // clickで一括反映（class/hidden/次へ表示）
+    };
+})();
+
+//吹き出し表示制御
+document.querySelectorAll('.page[data-show-staff-bubble!="true"] .staff-bubble')
+    .forEach(el => el.style.display = 'none');
+
