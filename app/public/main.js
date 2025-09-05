@@ -405,55 +405,6 @@ class VRMViewer {
     }
 }
 
-
-
-
-
-
-
-// --- ステップごとの再生アクション定義 ---
-// ※ あるものでOK：idle / yes / no（必要ならACTION_CONFIGに追加して拡張）
-/*
-const STEP_ACTION_MAP = {
-    step1: 'idle',      // ご案内開始
-    step2: 'no',       // 入力
-    step3: 'no',        // 
-    step4: 'no',       // 
-    pageComplete: 'idle',
-};
-
-// --- 画面フロー管理クラス ---
-class StepFlow {
-    constructor(viewer, initialStepId = 'step1') {
-        this.viewer = viewer;
-        this.current = null;
-        this.show(initialStepId);
-
-        // クリックで遷移（data-next / data-prev）
-        document.addEventListener('click', (e) => {
-            const next = e.target.closest('[data-next]');
-            const prev = e.target.closest('[data-prev]');
-            if (next) this.show(next.getAttribute('data-next'));
-            if (prev) this.show(prev.getAttribute('data-prev'));
-        });
-    }
-
-    show(stepId) {
-        // 表示切替
-        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-        const el = document.getElementById(stepId);
-        if (el) el.classList.add('active');
-
-        // アバターアクション再生
-        const action = STEP_ACTION_MAP[stepId] || 'idle';
-        if (this.viewer && typeof this.viewer.playAction === 'function') {
-            this.viewer.playAction(action);
-        }
-
-        this.current = stepId;
-    }
-}
-*/
 // =================================================================================
 // アプリケーションの実行
 // =================================================================================
@@ -480,8 +431,10 @@ startBtn.addEventListener('click', () => {
 window.choiceState = window.choiceState || {};
 
 (function () {
-    // クリック（とEnter/Space）を全体委譲で拾う
-    document.addEventListener('click', function (e) {
+
+
+    // 分岐式：.choice-btn に data-next-page があれば、同一ページ内の .btn.next に反映
+    document.addEventListener('click', (e) => {
         const btn = e.target.closest('.choice-btn');
         if (!btn) return;
 
@@ -502,25 +455,24 @@ window.choiceState = window.choiceState || {};
         btn.setAttribute('aria-pressed', 'true');
 
         // 値の保存（グローバル & hidden 連携）
-        const value = btn.dataset.value ?? btn.value ?? btn.textContent.trim();
+        window.choiceState = window.choiceState || {};
+        const value = btn.dataset.value ?? btn.textContent.trim();
         window.choiceState[group] = value;
 
         const hidden = page.querySelector('input[type="hidden"][name="' + group + '"]');
         if (hidden) hidden.value = value;
 
-        // 次へを表示
-        const next = page.querySelector('.btn.next');
-        if (next) next.classList.remove('is-hidden');
+        // ★ 次へボタン取得（このページにあるやつ）
+        const nextBtn = page.querySelector('.btn.next');
+        if (nextBtn) {
+            // data-next-page があれば上書き、無ければ既定値(data-next)を維持
+            const nextPageId = btn.dataset.nextPage;
+            if (nextPageId) nextBtn.dataset.next = nextPageId;
+            // ★ ここは「常に」表示する（is-hiddenを外す）
+            nextBtn.classList.remove('is-hidden');
+        }
     });
 
-    // キーボード操作（Enter/Space）
-    document.addEventListener('keydown', function (e) {
-        if (e.key !== 'Enter' && e.key !== ' ') return;
-        const btn = e.target.closest('.choice-btn');
-        if (!btn) return;
-        e.preventDefault();
-        btn.click();
-    });
 
     // ページ復元用（戻ってきた時に選択を再反映したい場合）
     window.applyChoiceSelection = function (pageEl) {
@@ -533,7 +485,13 @@ window.choiceState = window.choiceState || {};
         const target = page.querySelector('.choice-btn[data-value="' + saved + '"]');
         if (target) target.click(); // clickで一括反映（class/hidden/次へ表示）
     };
+
+
+
+
+
 })();
+
 
 //吹き出し表示制御
 document.querySelectorAll('.page[data-show-staff-bubble!="true"] .staff-bubble')

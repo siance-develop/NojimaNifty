@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <title>three-vrm example</title>
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=overlays-content">
+
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -41,7 +42,9 @@
                             </p>
                         </div>
                         <div class="page-bottom right">
-                            <button class="btn next" data-next="page2" data-youtube="6FRlR3EwpYM">視聴開始</button>
+                            <!-- 動画視聴完了のみで遷移 -->
+                            <button class="btn next" data-next="" data-youtube="6FRlR3EwpYM">視聴開始</button>
+                            <!--<button class="btn next" data-next="page10">視聴開始</button>-->
                         </div>
                     </section>
 
@@ -54,7 +57,7 @@
                                 誤りがなければ「次へ」を押してください。
                             </p>
                         </div>
-                        <!-- 例: 顧客情報カード -->
+                        <!-- 顧客情報カード -->
                         <div class="card">
                             <ul class="form-like form-like--sheet">
 
@@ -176,7 +179,7 @@
                             </p>
                         </div>
 
-                        <!-- 例: 顧客情報カード -->
+                        <!-- 顧客情報カード -->
                         <div class="card">
                             <!-- 1件目 -->
                             <div class="idcard-row">
@@ -260,7 +263,7 @@
                         </div>
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page3">戻る</button>
-                            <button id="nextBtn" class="btn next is-hidden" data-next="page5">次へ</button>
+                            <button class="btn next is-hidden" data-next="page5">次へ</button>
                         </div>
                     </section>
                     <!-- Page 5 -->
@@ -274,7 +277,7 @@
                         </div>
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page4">戻る</button>
-                            <button id="nextBtn" class="btn next is-hidden" data-next="page6">次へ</button>
+                            <button class="btn next is-hidden" data-next="page6">次へ</button>
                         </div>
                     </section>
                     <!-- Page 6 -->
@@ -290,7 +293,7 @@
                         </div>
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page5">戻る</button>
-                            <button id="nextBtn" class="btn next is-hidden" data-next="page7">次へ</button>
+                            <button class="btn next is-hidden" data-next="page7">次へ</button>
                         </div>
                     </section>
                     <!-- Page 7 -->
@@ -316,7 +319,7 @@
                         </div>
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page6">戻る</button>
-                            <button id="nextBtn" class="btn next is-hidden" data-next="page8">次へ</button>
+                            <button class="btn next is-hidden" data-next="page8">次へ</button>
                         </div>
                     </section>
                     <!-- Page 8 -->
@@ -330,7 +333,7 @@
                         </div>
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page7">戻る</button>
-                            <button id="nextBtn" class="btn next is-hidden" data-next="page9">次へ</button>
+                            <button class="btn next is-hidden" data-next="page9">次へ</button>
                         </div>
                     </section>
                     <!-- Page 9 -->
@@ -339,14 +342,184 @@
                             <p>＠nifty光のお申込者は<br>回線名義人と同じですか？</p>
                         </div>
                         <div class="choices" role="group" aria-label="名義人一致の選択">
-                            <button class="choice-btn" data-value="same" data-next-page="15" aria-pressed="false">申込者と同じ</button>
-                            <button class="choice-btn" data-value="different" data-next-page="10" aria-pressed="false">申込者と異なる</button>
+                            <button class="choice-btn" data-value="same" data-next-page="page10"
+                                aria-pressed="false">申込者と同じ</button>
+                            <button class="choice-btn" data-value="different" data-next-page="page10"
+                                aria-pressed="false">申込者と異なる</button>
                         </div>
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page8">戻る</button>
-                            <button id="nextBtn" class="btn next is-hidden" data-next="pageComplete">次へ</button>
+                            <button class="btn next is-hidden" data-next="">次へ</button>
                         </div>
                     </section>
+                    <!-- Page 10 -->
+                    <section class="page" id="page10" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                回線名義人名をカナで入力してください
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="name-form" role="group" aria-label="回線名義人名（カナ）">
+                                <p class="note" aria-live="polite">全角カタカナでご入力ください。記号はご利用できません。</p>
+
+                                <div class="row-body row-two">
+                                    <label class="mini">姓</label>
+                                    <input class="pill-input" id="nameKanaFamily" name="nameKanaFamily" type="text"
+                                        inputmode="kana" value="ミホン">
+                                    <label class="mini">名</label>
+                                    <input class="pill-input" id="nameKanaGiven" name="nameKanaGiven" type="text"
+                                        inputmode="kana" value="タロウ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page9">戻る</button>
+                            <button class="btn next is-disabled" data-next="page11">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 11 -->
+                    <section class="page" id="page11" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                回線名義人名を漢字で入力してください
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="name-form" role="group" aria-label="回線名義人名（カナ）">
+                                <p class="note" aria-live="polite">すべて全角でご入力ください。（外国籍の方はカタカナ）</p>
+
+                                <div class="row-body row-two">
+                                    <label class="mini">姓</label>
+                                    <input class="pill-input" id="nameKanjiFamily" name="nameKanjiFamily" type="text"
+                                        inputmode="kana" value="見本">
+                                    <label class="mini">名</label>
+                                    <input class="pill-input" id="nameKanjiGiven" name="nameKanjiGiven" type="text"
+                                        inputmode="kana" value="太郎">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page10">戻る</button>
+                            <button class="btn next is-disabled" data-next="page12">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 12 -->
+                    <section class="page" id="page12" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                回線名義人との続柄を選択してください
+                            </p>
+                        </div>
+                        <div class="choices grid-2" role="group" aria-label="回線名義人との続柄">
+                            <button class="choice-btn" data-value="family" aria-pressed="false">家族</button>
+                            <button class="choice-btn" data-value="other" aria-pressed="false">その他</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page11">戻る</button>
+                            <button class="btn next is-hidden" data-next="page13">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 13 -->
+                    <section class="page" id="page13" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                現在、＠nifty光を利用予定のご住所で<br>ネット回線をご利用中ですか？
+                            </p>
+                        </div>
+                        <div class="choices" role="group" aria-label="回線名義人との続柄">
+                            <!-- 現在利用していない -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="bank_debit"
+                                aria-pressed="false">
+                                現在利用していない
+                                <span class="sub">今回新しくネット回線を導入する</span>
+                            </button>
+                            <!-- 現在利用している -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="bank_debit"
+                                aria-pressed="false">
+                                現在利用している
+                                <span class="sub">他社光回線・ケーブルテレビ・モバイルルーター等</span>
+                            </button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page12">戻る</button>
+                            <button class="btn next is-hidden" data-next="page14">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 14 -->
+                    <section class="page" id="page14" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                現在、ご利用中のネット回線を<br>選んでください
+                            </p>
+                        </div>
+                        <div class="card">
+                            <fieldset class="option-group grid-2" role="radiogroup" aria-label="現在利用中のネット回線">
+                                <!-- 1行目 -->
+                                <label class="option choice-btn">
+                                    <input type="radio" name="current_network" value="au_hikari" aria-pressed="false">
+                                    <span class="option__dot" ></span>
+                                    <span class="option__text">auひかり</span>
+                                </label>
+
+                                <label class="option choice-btn">
+                                    <input type="radio" name="current_network" value="cable_tv" aria-pressed="false">
+                                    <span class="option__dot" ></span>
+                                    <span class="option__text">ケーブルテレビ</span>
+                                </label>
+
+                                <!-- 2行目 -->
+                                <label class="option choice-btn">
+                                    <input type="radio" name="current_network" value="nuro" aria-pressed="false">
+                                    <span class="option__dot" ></span>
+                                    <span class="option__text">NURO光</span>
+                                </label>
+
+                                <label class="option choice-btn" >
+                                    <input type="radio" name="current_network" value="commufa" aria-pressed="false">
+                                    <span class="option__dot" ></span>
+                                    <span class="option__text">コミュファ光</span>
+                                </label>
+
+                                <!-- 3行目 -->
+                                <label class="option choice-btn">
+                                    <input type="radio" name="current_network" value="eo_hikari" aria-pressed="false">
+                                    <span class="option__dot" ></span>
+                                    <span class="option__text">eo光</span>
+                                </label>
+
+                                <label class="option choice-btn">
+                                    <input type="radio" name="current_network" value="other" aria-pressed="false">
+                                    <span class="option__dot" ></span>
+                                    <span class="option__text">その他</span>
+                                </label>
+
+                                <!-- 幅いっぱい -->
+                                <label class="option span-2 choice-btn">
+                                    <input type="radio" name="current_network" value="flets_family" aria-pressed="false">
+                                    <span class="option__dot" ></span>
+                                    <span class="option__text">フレッツ光/ドコモ光/SoftBank光/So-net光 など</span>
+                                </label>
+
+                                <label class="option span-2 choice-btn">
+                                    <input type="radio" name="current_network" value="home_mobile_router" aria-pressed="false">
+                                    <span class="option__dot" ></span>
+                                    <span class="option__text">ホームルーター・モバイルルーター</span>
+                                </label>
+                            </fieldset>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page13">戻る</button>
+                            <button class="btn next is-hidden" data-next="pageComplete">次へ</button>
+                        </div>
+                    </section>
+
+
+
                     <!-- 完了 -->
                     <section class="page" id="pageComplete" aria-hidden="true">
                         <div class="balloon">
@@ -406,7 +579,13 @@
             page1: 'idle',
             page2: 'yes',
             page3: 'no',
-            page4: 'yes',
+            page4: 'no',
+            page5: 'no',
+            page6: 'no',
+            page7: 'no',
+            page8: 'no',
+            page9: 'no',
+            page10: 'no',
             pageComplete: 'idle',
         };
 

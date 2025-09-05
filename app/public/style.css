@@ -238,14 +238,16 @@ canvas {
 }
 
 .balloon {
+  display: flex;
+  align-items: center;
+  min-height: 200px;
   position: relative;
   margin: 30px auto;
   width: 94%;
   background: rgba(255, 255, 255, 0.96);
   border-radius: 16px;
   padding: clamp(15px, 2.4vw, 20px) clamp(15px, 3vw, 20px);
-  /*box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);*/
-  /*border: 1px solid rgba(0, 0, 0, 0.08);*/
+
 }
 
 /* 吹き出しの“しっぽ”（下側に出す） */
@@ -516,7 +518,7 @@ canvas {
   gap: 14px;
   align-items: center;
   background: #fff;
-  border: 4px solid #b9b9b9;
+  border: 4px solid #fff;
   border-radius: 16px;
   padding: 10px;
   opacity: .85;
@@ -703,7 +705,7 @@ canvas {
   padding: 6px 12px;
   border-radius: 20px;
   font-weight: 600;
-  font-size:30px;
+  font-size: 30px;
   color: #fff;
   background: #ff4545;
   /* ピンク系 */
@@ -735,6 +737,100 @@ canvas {
   border-left: 12px solid transparent;
   border-right: 12px solid transparent;
   border-top: 12px solid #ff4545;
+}
+
+/* 2列レイアウト */
+.option-group.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.option.span-2 {
+  grid-column: 1 / -1;
+}
+
+/* オプション本体 */
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px 14px 52px;
+  border: 4px solid #fff;
+  border-radius: 16px;
+  background: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  color: #222;
+  cursor: pointer;
+  user-select: none;
+  opacity: .85;
+}
+
+/* ネイティブ radio は隠す（でも画面リーダーには届く） */
+.option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+
+/* 左の○（外円） */
+.option__dot {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #ccc;
+}
+
+/* 内円（未選択=透明） */
+.option::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background .15s;
+}
+
+/* 選択時：赤に */
+.option:has(input[type="radio"]:checked) {
+  border-color: #e60012;
+  color: #e60012;
+  opacity: 1;
+}
+
+.option:has(input[type="radio"]:checked)::after {
+  background: #e60012;
+}
+
+/* :has が使えないブラウザ用のフォールバック（JSで .is-checked を付ける） */
+.option.is-checked {
+  border-color: #e60012;
+  color: #e60012;
+}
+
+.option.is-checked::after {
+  background: #e60012;
+}
+
+.note {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: #fff;
 }
 
 .is-hidden {
