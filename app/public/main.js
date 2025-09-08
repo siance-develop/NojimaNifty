@@ -16,17 +16,17 @@ import { loadXRAnimatorAnimation } from './loadXRAnimatorAnimation.js'; // XR An
 const ACTION_CONFIG = {
     idle: {
         animationPath: 'animations/idle.fbx',
-        soundPath: 'sounds/yes.mp3', // 例: 導入の音声
+        soundPath: 'sounds/saple-001.wav', // 例: 導入の音声
         expression: 'happy'
     },
     yes: {
         animationPath: 'animations/motion_20second.glb', // 「はい」の時に再生するアニメーションファイル
-        soundPath: 'sounds/yes.mp3',             // 「はい」の時に再生する音声ファイル
+        soundPath: 'sounds/saple-001.wav',             // 「はい」の時に再生する音声ファイル
         expression: 'relaxed',                     // 「はい」の時に適用する表情名
     },
     no: {
         animationPath: 'animations/Bow.fbx',     // 「いいえ」の時に再生するアニメーションファイル
-        soundPath: 'sounds/no.mp3',              // 「いいえ」の時に再生する音声ファイル
+        soundPath: 'sounds/saple-001.wav',              // 「いいえ」の時に再生する音声ファイル
         expression: 'sad',                     // 「いいえ」の時に適用する表情名
     },
 };
@@ -485,10 +485,6 @@ window.choiceState = window.choiceState || {};
         const target = page.querySelector('.choice-btn[data-value="' + saved + '"]');
         if (target) target.click(); // clickで一括反映（class/hidden/次へ表示）
     };
-
-
-
-
 
 })();
 
