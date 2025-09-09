@@ -1,33 +1,1298 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>three-vrm example</title>
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-        <link rel="stylesheet" href="style.css" />
-    </head>
 
-    <body>
+<head>
+    <meta charset="utf-8" />
+    <title>three-vrm example</title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=overlays-content">
 
-        <div id="button-container">
-            <button id="yesButton">はい</button>
-            <button id="noButton">いいえ</button>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- 初期モーダル -->
+    <div id="start-modal" class="modal active">
+        <div class="modal-content">
+            <h1>@nifty光 契約受付</h1>
+            <button id="startButton">ご案内開始</button>
         </div>
+    </div>
+    <!-- YouTube再生モーダル -->
+    <div id="yt-modal" class="modal">
+        <div class="modal-content yt">
+            <div class="yt-frame">
+                <div id="yt-player"></div>
+            </div>
+            <div id="yt-error" class="yt-error" hidden></div>
+        </div>
+    </div>
+    <div id="stage-wrap">
+        <div id="app">
+            <!-- canvas は main.js が append -->
+            <div id="ui">
+                <div id="stage" style="width:768px; height:1024px;">
+                    <!-- Page 1 -->
+                    <section class="page active" id="page1">
+                        <div class="balloon">
+                            <p>
+                                @nifty光のお申込みありがとうございます。<br>
+                                まずは@niftyからのご契約前の重要事項の説明を動画でご案内します。<br>
+                                「視聴開始」を押してください。
+                            </p>
+                        </div>
+                        <div class="page-bottom right">
+                            <!-- 動画視聴完了のみで遷移 -->
+                            <!--<button class="btn next" data-next="" data-youtube="6FRlR3EwpYM">視聴開始</button>-->
+                            <button class="btn next" data-next="page28">視聴開始</button>
+                        </div>
+                    </section>
 
-        <script type="importmap">
-            {
-                "imports": {
-                    "fflate": "https://cdn.jsdelivr.net/npm/fflate@0.7.4/esm/browser.js",
-                    "three": "https://cdn.jsdelivr.net/npm/three@0.177.0/build/three.module.js",
-                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/",
-                    "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3/lib/three-vrm.module.min.js"
+                    <!-- Page 2 -->
+                    <section class="page" id="page2" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                動画のご視聴ありがとうございます。<br>
+                                従業員がノジマのアプリ会員情報からお客様情報を反映させました。<br>
+                                誤りがなければ「次へ」を押してください。
+                            </p>
+                        </div>
+                        <!-- 顧客情報カード -->
+                        <div class="card">
+                            <ul class="form-like form-like--sheet">
+
+                                <!-- お申込者名（カナ） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">お申込者名（カナ）</span>
+                                    </div>
+
+                                    <div class="row-body row-two">
+                                        <label class="mini">姓</label>
+                                        <input class="pill-input" id="applicantNameKanaFamily"
+                                            name="applicantNameKanaFamily" type="text" inputmode="kana" value="ミホン"
+                                            readonly />
+                                        <label class="mini">名</label>
+                                        <input class="pill-input" id="applicantNameKanaGiven"
+                                            name="applicantNameKanaGiven" type="text" inputmode="kana" value="タロウ"
+                                            readonly />
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                                <!-- お申込者名（漢字） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">お申込者名（漢字）</span>
+                                    </div>
+
+                                    <div class="row-body row-two">
+                                        <label class="mini">姓</label>
+                                        <input class="pill-input" id="applicantNameKanjiFamily"
+                                            name="applicantNameKanjiFamily" type="text" value="見本" readonly />
+                                        <label class="mini">名</label>
+                                        <input class="pill-input" id="nameKanjiGiven" name="nameKanjiGiven" type="text"
+                                            value="太郎" readonly />
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                                <!-- 性別（表示ピル） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">性別</span>
+                                    </div>
+
+                                    <div class="row-body">
+                                        <div class="pill-display">男性</div>
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                                <!-- 生年月日（3分割 + 年月日ラベル） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">生年月日</span>
+                                    </div>
+
+                                    <div class="row-body row-date">
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="4" value="1982" readonly />
+                                        <span class="unit">年</span>
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="2" value="6" readonly />
+                                        <span class="unit">月</span>
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="2" value="23" readonly />
+                                        <span class="unit">日</span>
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                                <!-- 電話番号（3分割 + 罫線風ハイフン） -->
+                                <li class="row">
+                                    <div class="row-label">
+                                        <span class="badge">電話番号</span>
+                                    </div>
+
+                                    <div class="row-body row-tel">
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="4" value="080" readonly />
+                                        <span class="sep">—</span>
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="4" value="1234" readonly />
+                                        <span class="sep">—</span>
+                                        <input class="pill-input center" type="text" inputmode="numeric" pattern="\d*"
+                                            maxlength="4" value="5678" readonly />
+                                    </div>
+
+                                    <div class="row-ctrl">
+                                        <button class="fix-btn" type="button">修正</button>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page1">戻る</button>
+                            <button class="btn next" data-next="page3">次へ</button>
+                        </div>
+                    </section>
+
+                    <!-- Page 3 -->
+                    <section class="page" id="page3" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                お客様情報から現在ご利用中の@nifty IDが見つかりました。<br>
+                                今回ご利用になるIDを選んでください。
+                            </p>
+                        </div>
+
+                        <!-- 顧客情報カード -->
+                        <div class="card">
+                            <!-- 1件目 -->
+                            <div class="idcard-row">
+                                <label class="idcard">
+                                    <input type="radio" name="niftyId" value="RKT39256-1" checked>
+                                    <div class="idcard__body">
+                                        <div class="idcard__radio"></div>
+                                        <div class="idcard__main">
+                                            <div class="idcard__title">RKT39256</div>
+                                            <div class="idcard__meta">
+                                                <div>@nifty IDメールアドレス</div>
+                                                <div class="idcard__meta-value">example@nifty.com</div>
+                                                <div>ご入会日</div>
+                                                <div class="idcard__meta-value">2023年4月12日</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="idcard__side">
+                                    <div class="plan">
+                                        <div class="plan__title">月額課金</div>
+                                        <div class="plan__value plan__value--none">なし</div>
+                                        <button type="button" class="plan__detail">詳細</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2件目 -->
+                            <div class="idcard-row">
+                                <label class="idcard">
+                                    <input type="radio" name="niftyId" value="RKT39256-2">
+                                    <div class="idcard__body">
+                                        <div class="idcard__radio"></div>
+                                        <div class="idcard__main">
+                                            <div class="idcard__title">NOS39256</div>
+                                            <div class="idcard__meta">
+                                                <div>@nifty IDメールアドレス</div>
+                                                <div class="idcard__meta-value">example@nifty.com</div>
+                                                <div>ご入会日</div>
+                                                <div class="idcard__meta-value">2023年6月20日</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="idcard__side">
+                                    <div class="plan">
+                                        <div class="plan__title">月額課金</div>
+                                        <div class="plan__value plan__value--has">あり</div>
+                                        <button type="button" class="plan__detail">詳細</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 新規登録 -->
+                            <div class="idcard-row">
+                                <label class="idcard idcard--new">
+                                    <input type="radio" name="niftyId" value="__new__">
+                                    <div class="idcard__body">
+                                        <div class="idcard__radio"></div>
+                                        <div class="idcard__main">
+                                            <div class="idcard__title idcard__title--new">@nifty IDを新規登録する</div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page2">戻る</button>
+                            <button class="btn next" data-next="page4">次へ</button>
+                        </div>
+
+                    </section>
+                    <!-- Page 4 -->
+                    <section class="page" id="page4" aria-hidden="true" data-choice-group="mail_optin">
+                        <div class="balloon">
+                            <p>@niftyからお得なお知らせメールを希望されますか？</p>
+                        </div>
+                        <div class="choices" role="group" aria-label="メール受信の希望">
+                            <button class="choice-btn" data-value="yes" aria-pressed="false">希望する</button>
+                            <button class="choice-btn" data-value="no" aria-pressed="false">希望しない</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page3">戻る</button>
+                            <button class="btn next is-hidden" data-next="page5">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="mail_optin" value="">
+                    </section>
+                    <!-- Page 5 -->
+                    <section class="page" id="page5" aria-hidden="true" data-choice-group="contract_doc_method">
+                        <div class="balloon">
+                            <p>@niftyの契約書面の確認方法を<br>選んでください</p>
+                        </div>
+                        <div class="choices" role="group" aria-label="契約書面の確認方法">
+                            <button class="choice-btn" data-value="yes" aria-pressed="false">Webページで確認する</button>
+                            <button class="choice-btn" data-value="no" aria-pressed="false">書面で確認する</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page4">戻る</button>
+                            <button class="btn next is-hidden" data-next="page6">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="contract_doc_method" value="">
+                    </section>
+                    <!-- Page 6 -->
+                    <section class="page" id="page6" aria-hidden="true" data-choice-group="contact_time">
+                        <div class="balloon">
+                            <p>@niftyから契約内容の確認や工事日の調整でお電話を差し上げることがあります。<br>ご希望の連絡時間帯を選んでください。</p>
+                        </div>
+                        <div class="choices grid-2" role="group" aria-label="連絡希望時間帯">
+                            <button class="choice-btn" data-value="weekday_am" aria-pressed="false">平日午前</button>
+                            <button class="choice-btn" data-value="weekday_pm" aria-pressed="false">平日午後</button>
+                            <button class="choice-btn" data-value="holiday_am" aria-pressed="false">土休日午前</button>
+                            <button class="choice-btn" data-value="holiday_pm" aria-pressed="false">土休日午後</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page5">戻る</button>
+                            <button class="btn next is-hidden" data-next="page7">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="contact_time" value="">
+                    </section>
+                    <!-- Page 7 -->
+                    <section class="page" id="page7" aria-hidden="true" data-choice-group="payment_method"
+                        data-show-staff-bubble="false">
+                        <div class="balloon">
+                            <p>＠nifty光のお支払い方法を選んでください。<br>本日、ノジマ店頭で値引きキャンペーンを適用する場合は「クレジットカード」を選択してください。</p>
+                        </div>
+                        <div class="choices" role="group" aria-label="支払い方法">
+                            <!-- ★ 吹き出し（常時表示） -->
+                            <div class="staff-bubble" aria-live="polite">従業員選択済み</div>
+                            <!-- クレジットカード -->
+                            <button class="choice-btn" data-value="credit" aria-pressed="false">
+                                クレジットカード
+                            </button>
+
+                            <!-- 口座振替（注意文付き） -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="bank_debit"
+                                aria-pressed="false">
+                                口座振替
+                                <span class="sub">※毎月口座振替決済管理費220円が別途かかります</span>
+                            </button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page6">戻る</button>
+                            <button class="btn next is-hidden" data-next="page8">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="payment_method" value="">
+                    </section>
+                    <!-- Page 8 -->
+                    <section class="page" id="page8" aria-hidden="true" data-choice-group="service_address_relation">
+                        <div class="balloon">
+                            <p>＠nifty光をご利用になる住所はどちらですか？</p>
+                        </div>
+                        <div class="choices" role="group" aria-label="ご利用住所の選択">
+                            <button class="choice-btn" data-value="same" aria-pressed="false">申込者住所と同じ</button>
+                            <button class="choice-btn" data-value="different" aria-pressed="false">申込者住所と異なる</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page7">戻る</button>
+                            <button class="btn next is-hidden" data-next="page9">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="service_address_relation" value="">
+                    </section>
+                    <!-- Page 9 -->
+                    <section class="page" id="page9" aria-hidden="true" data-choice-group="ntt_holder_relation">
+                        <div class="balloon">
+                            <p>＠nifty光のお申込者は<br>回線名義人と同じですか？</p>
+                        </div>
+                        <div class="choices" role="group" aria-label="名義人一致の選択">
+                            <button class="choice-btn" data-value="same" data-next-page="page10"
+                                aria-pressed="false">申込者と同じ</button>
+                            <button class="choice-btn" data-value="different" data-next-page="page10"
+                                aria-pressed="false">申込者と異なる</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page8">戻る</button>
+                            <button class="btn next is-hidden" data-next="">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="ntt_holder_relation" value="">
+                    </section>
+                    <!-- Page 10 -->
+                    <section class="page" id="page10" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                回線名義人名をカナで入力してください
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="name-form" role="group" aria-label="回線名義人名（カナ）">
+                                <p class="note" aria-live="polite">全角カタカナでご入力ください。記号はご利用できません。</p>
+
+                                <div class="row-body row-two">
+                                    <label class="mini">姓</label>
+                                    <input class="pill-input" id="holderNameKanaFamily" name="holderNameKanaFamily"
+                                        type="text" inputmode="kana" value="ミホン">
+                                    <label class="mini">名</label>
+                                    <input class="pill-input" id="holderNameKanaGiven" name="holderNameKanaGiven"
+                                        type="text" inputmode="kana" value="タロウ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page9">戻る</button>
+                            <button class="btn next is-disabled" data-next="page11">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="ntt_holder_relation" value="">
+                    </section>
+                    <!-- Page 11 -->
+                    <section class="page" id="page11" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                回線名義人名を漢字で入力してください
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="name-form" role="group" aria-label="回線名義人名（カナ）">
+                                <p class="note" aria-live="polite">すべて全角でご入力ください。（外国籍の方はカタカナ）</p>
+
+                                <div class="row-body row-two">
+                                    <label class="mini">姓</label>
+                                    <input class="pill-input" id="holderNameKanjiFamily" name="holderNameKanjiFamily"
+                                        type="text" inputmode="kana" value="見本">
+                                    <label class="mini">名</label>
+                                    <input class="pill-input" id="holderNameKanjiGiven" name="holderNameKanjiGiven"
+                                        type="text" inputmode="kana" value="太郎">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page10">戻る</button>
+                            <button class="btn next is-disabled" data-next="page12">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="ntt_holder_relation" value="">
+                    </section>
+                    <!-- Page 12 -->
+                    <section class="page" id="page12" aria-hidden="true" data-choice-group="relation_with_holder">
+                        <div class="balloon">
+                            <p>
+                                回線名義人との続柄を選択してください
+                            </p>
+                        </div>
+                        <div class="choices grid-2" role="group" aria-label="回線名義人との続柄">
+                            <button class="choice-btn" data-value="family" aria-pressed="false">家族</button>
+                            <button class="choice-btn" data-value="other" aria-pressed="false">その他</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page11">戻る</button>
+                            <button class="btn next is-hidden" data-next="page13">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="relation_with_holder" value="">
+                    </section>
+                    <!-- Page 13 -->
+                    <section class="page" id="page13" aria-hidden="true" data-choice-group="internet_usage">
+                        <div class="balloon">
+                            <p>
+                                現在、＠nifty光を利用予定のご住所で<br>ネット回線をご利用中ですか？
+                            </p>
+                        </div>
+                        <div class="choices" role="group" aria-label="回線名義人との続柄">
+                            <!-- 現在利用していない -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="not_using" aria-pressed="false">
+                                現在利用していない
+                                <span class="sub">今回新しくネット回線を導入する</span>
+                            </button>
+                            <!-- 現在利用している -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="using_other"
+                                aria-pressed="false">
+                                現在利用している
+                                <span class="sub">他社光回線・ケーブルテレビ・モバイルルーター等</span>
+                            </button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page12">戻る</button>
+                            <button class="btn next is-hidden" data-next="page14">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="internet_usage" value="">
+                    </section>
+                    <!-- Page 14 -->
+                    <section class="page" id="page14" aria-hidden="true" data-choice-group="current_network">
+                        <div class="balloon">
+                            <p>
+                                現在、ご利用中のネット回線を<br>選んでください
+                            </p>
+                        </div>
+                        <div class="card">
+                            <fieldset class="option-group grid-2" role="radiogroup" aria-label="現在利用中のネット回線">
+                                <!-- 1行目 -->
+                                <label class="option choice-btn" data-value="au_hikari">
+                                    <input type="radio" name="current_network" value="au_hikari" aria-pressed="false">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">auひかり</span>
+                                </label>
+
+                                <label class="option choice-btn" data-value="cable_tv">
+                                    <input type="radio" name="current_network" value="cable_tv" aria-pressed="false">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">ケーブルテレビ</span>
+                                </label>
+
+                                <!-- 2行目 -->
+                                <label class="option choice-btn" data-value="nuro">
+                                    <input type="radio" name="current_network" value="nuro" aria-pressed="false">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">NURO光</span>
+                                </label>
+
+                                <label class="option choice-btn" data-value="commufa">
+                                    <input type="radio" name="current_network" value="commufa" aria-pressed="false">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">コミュファ光</span>
+                                </label>
+
+                                <!-- 3行目 -->
+                                <label class="option choice-btn" data-value="eo_hikari">
+                                    <input type="radio" name="current_network" value="eo_hikari" aria-pressed="false">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">eo光</span>
+                                </label>
+
+                                <label class="option choice-btn" data-value="other">
+                                    <input type="radio" name="current_network" value="other" aria-pressed="false">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">その他</span>
+                                </label>
+
+                                <!-- 幅いっぱい -->
+                                <label class="option span-2 choice-btn" data-value="flets_family">
+                                    <input type="radio" name="current_network" value="flets_family"
+                                        aria-pressed="false">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">フレッツ光/ドコモ光/SoftBank光/So-net光 など</span>
+                                </label>
+
+                                <label class="option span-2 choice-btn" data-value="home_mobile_router">
+                                    <input type="radio" name="current_network" value="home_mobile_router"
+                                        aria-pressed="false">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">ホームルーター・モバイルルーター</span>
+                                </label>
+                            </fieldset>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page13">戻る</button>
+                            <button class="btn next is-hidden" data-next="page15">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="current_network" value="">
+                    </section>
+                    <!-- Page 15 -->
+                    <section class="page" id="page15" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                フレッツ光からの乗り換えにあたって<br>NTT東日本またはNTT西日本から取得した<br>転用承諾番号を入力してください
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="transfer-form" role="group" aria-label="転用承諾番号の入力">
+                                <p class="note" aria-live="polite">ハイフンは不要です</p>
+
+                                <div class="input-wrap">
+                                    <label class="lead-label" for="transferPrefix1" aria-hidden="true">
+                                        <select id="transferPrefix1" name="transferPrefix1" class="lead-select">
+                                            <option value="E" selected>E</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </label>
+                                    <input id="transferCode1" name="transferCode1" class="pill-input" type="text"
+                                        inputmode="latin" autocomplete="off" autocapitalize="characters"
+                                        spellcheck="false" placeholder="例）1234567890" maxlength="11" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page14">戻る</button>
+                            <button class="btn next is-disabled" data-next="page16">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 16 -->
+                    <section class="page" id="page16" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                のりかえ元の光回線サービスから取得した事業者変更承諾番号を入力してください
+                            </p>
+                        </div>
+                        <div class="card">
+                            <div class="transfer-form" role="group" aria-label="事業者変更承諾番号の入力">
+                                <p class="note" aria-live="polite">ハイフンは不要です</p>
+
+                                <div class="input-wrap">
+                                    <label class="lead-label" for="transferPrefix2" aria-hidden="true">
+                                        <select id="transferPrefix2" name="transferPrefix2" class="lead-select">
+                                            <option value="F" selected>F</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </label>
+                                    <input id="transferCode2" name="transferCode2" class="pill-input" type="text"
+                                        inputmode="latin" autocomplete="off" autocapitalize="characters"
+                                        spellcheck="false" placeholder="例）1234567890" maxlength="11" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page15">戻る</button>
+                            <button class="btn next is-disabled" data-next="page17">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 17 -->
+                    <section class="page" id="page17" aria-hidden="true" data-choice-group="applicant_region">
+                        <div class="balloon">
+                            <p>お申込者住所のエリアを選択してください</p>
+                        </div>
+
+                        <div class="choices grid-2" role="group" aria-label="お申込者住所のエリア">
+                            <button class="choice-btn" data-value="east" aria-pressed="false">東日本</button>
+                            <button class="choice-btn" data-value="west" aria-pressed="false">西日本</button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page16">戻る</button>
+                            <button class="btn next is-hidden" data-next="page18">次へ</button>
+                        </div>
+
+                        <!-- 選択値を保持 -->
+                        <input type="hidden" name="applicant_region" value="">
+                    </section>
+                    <!-- Page 18 -->
+                    <section class="page" id="page18" aria-hidden="true" data-choice-group="residence_type">
+                        <div class="balloon">
+                            <p>お申込者住所の住居形態を選んでください</p>
+                        </div>
+
+                        <div class="choices grid-2" role="group" aria-label="住居形態の選択">
+                            <button class="choice-btn" data-value="detached_owner" aria-pressed="false">戸建て（持家）</button>
+                            <button class="choice-btn" data-value="detached_rent" aria-pressed="false">戸建て（賃貸）</button>
+                            <button class="choice-btn" data-value="apartment_condo"
+                                aria-pressed="false">集合住宅（分譲）</button>
+                            <button class="choice-btn" data-value="apartment_rent"
+                                aria-pressed="false">集合住宅（賃貸）</button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page17">戻る</button>
+                            <button class="btn next is-hidden" data-next="page19">次へ</button>
+                        </div>
+
+                        <!-- 選択値を保持 -->
+                        <input type="hidden" name="residence_type" value="">
+                    </section>
+                    <!-- Page 19 -->
+                    <section class="page" id="page19" aria-hidden="true">
+                        <div class="balloon">
+                            <p>ご契約住所（現住所）の郵便番号を入力してください</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="zip-form" role="group" aria-label="郵便番号の入力">
+                                <p class="note" aria-live="polite">半角で入力してください</p>
+
+                                <div class="row-body row-zip">
+                                    <input id="zipA1" name="zipA1" class="pill-input center" type="text"
+                                        inputmode="numeric" pattern="\d*" maxlength="3" autocomplete="postal-code"
+                                        placeholder="123">
+                                    <span class="sep">—</span>
+                                    <input id="zipB1" name="zipB1" class="pill-input center" type="text"
+                                        inputmode="numeric" pattern="\d*" maxlength="4" autocomplete="postal-code"
+                                        placeholder="4567">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page18">戻る</button>
+                            <button class="btn next is-disabled" data-next="page20" aria-disabled="true">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 20 : 住所の丁目選択 -->
+                    <section class="page" id="page20" aria-hidden="true" data-choice-group="address_chome">
+                        <div class="balloon">
+                            <p>お住まいのご住所の続きを選んでください</p>
+                        </div>
+
+                        <div class="card">
+                            <!-- 市区町村・町名の見出し（例） -->
+                            <p class="note" aria-live="polite">神奈川県横浜市西区みなとみらい</p>
+
+                            <fieldset class="option-group grid-2" role="radiogroup" aria-label="丁目の選択">
+                                <!-- 1行目 -->
+                                <label class="option choice-btn" data-value="1">
+                                    <input type="radio" name="address_chome_radio" value="1">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">1丁目</span>
+                                </label>
+
+                                <label class="option choice-btn" data-value="2">
+                                    <input type="radio" name="address_chome_radio" value="2">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">2丁目</span>
+                                </label>
+
+                                <!-- 2行目 -->
+                                <label class="option choice-btn" data-value="3">
+                                    <input type="radio" name="address_chome_radio" value="3">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">3丁目</span>
+                                </label>
+
+                                <label class="option choice-btn" data-value="4">
+                                    <input type="radio" name="address_chome_radio" value="4">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">4丁目</span>
+                                </label>
+
+                                <!-- 3行目 -->
+                                <label class="option choice-btn" data-value="5">
+                                    <input type="radio" name="address_chome_radio" value="5">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">5丁目</span>
+                                </label>
+
+                                <label class="option choice-btn" data-value="6">
+                                    <input type="radio" name="address_chome_radio" value="6">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">6丁目</span>
+                                </label>
+
+                                <!-- 幅いっぱい（上記にない） -->
+                                <label class="option span-2 choice-btn" data-value="none">
+                                    <input type="radio" name="address_chome_radio" value="none">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">上記にはない</span>
+                                </label>
+                            </fieldset>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page19">戻る</button>
+                            <button class="btn next is-hidden" data-next="page21">次へ</button>
+                        </div>
+
+                        <!-- 選択値保存（"1"〜"6" or "none"） -->
+                        <input type="hidden" name="address_chome" value="">
+                    </section>
+                    <!-- Page 21 -->
+                    <section class="page" id="page21" aria-hidden="true" data-choice-group="applicant_region2">
+                        <div class="balloon">
+                            <p>お申込者住所のエリアを選択してください</p>
+                        </div>
+
+                        <div class="choices grid-2" role="group" aria-label="お申込者住所のエリア">
+                            <button class="choice-btn" data-value="east" aria-pressed="false">東日本</button>
+                            <button class="choice-btn" data-value="west" aria-pressed="false">西日本</button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page20">戻る</button>
+                            <button class="btn next is-hidden" data-next="page22">次へ</button>
+                        </div>
+
+                        <!-- 選択値を保持 -->
+                        <input type="hidden" name="applicant_region2" value="">
+                    </section>
+                    <!-- Page 22 -->
+                    <section class="page" id="page22" aria-hidden="true" data-choice-group="residence_type2">
+                        <div class="balloon">
+                            <p>お申込者住所の住居形態を選んでください</p>
+                        </div>
+
+                        <div class="choices grid-2" role="group" aria-label="住居形態の選択">
+                            <button class="choice-btn" data-value="detached_owner" aria-pressed="false">戸建て（持家）</button>
+                            <button class="choice-btn" data-value="detached_rent" aria-pressed="false">戸建て（賃貸）</button>
+                            <button class="choice-btn" data-value="apartment_condo"
+                                aria-pressed="false">集合住宅（分譲）</button>
+                            <button class="choice-btn" data-value="apartment_rent"
+                                aria-pressed="false">集合住宅（賃貸）</button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page21">戻る</button>
+                            <button class="btn next is-hidden" data-next="page23">次へ</button>
+                        </div>
+
+                        <!-- 選択値を保持 -->
+                        <input type="hidden" name="residence_type2" value="">
+                    </section>
+                    <!-- Page 23 -->
+                    <section class="page" id="page23" aria-hidden="true">
+                        <div class="balloon">
+                            <p>ご契約住所（現住所）の郵便番号を入力してください</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="zip-form" role="group" aria-label="郵便番号の入力">
+                                <p class="note" aria-live="polite">半角で入力してください</p>
+
+                                <div class="row-body row-zip">
+                                    <input id="zipA2" name="zipA2" class="pill-input center" type="text"
+                                        inputmode="numeric" pattern="\d*" maxlength="3" autocomplete="postal-code"
+                                        placeholder="123">
+                                    <span class="sep">—</span>
+                                    <input id="zipB2" name="zipB2" class="pill-input center" type="text"
+                                        inputmode="numeric" pattern="\d*" maxlength="4" autocomplete="postal-code"
+                                        placeholder="4567">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page22">戻る</button>
+                            <button class="btn next is-disabled" data-next="page24" aria-disabled="true">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 24 : 住所の丁目選択 -->
+                    <section class="page" id="page24" aria-hidden="true" data-choice-group="address_chome2">
+                        <div class="balloon">
+                            <p>お住まいのご住所の続きを選んでください</p>
+                        </div>
+
+                        <div class="card">
+                            <!-- 市区町村・町名の見出し（例） -->
+                            <p class="note" aria-live="polite">神奈川県横浜市西区みなとみらい</p>
+
+                            <fieldset class="option-group grid-2" role="radiogroup" aria-label="丁目の選択">
+                                <!-- 1行目 -->
+                                <label class="option choice-btn" data-value="1">
+                                    <input type="radio" name="address_chome_radio" value="1">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">1丁目</span>
+                                </label>
+
+                                <label class="option choice-btn" data-value="2">
+                                    <input type="radio" name="address_chome_radio" value="2">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">2丁目</span>
+                                </label>
+
+                                <!-- 2行目 -->
+                                <label class="option choice-btn" data-value="3">
+                                    <input type="radio" name="address_chome_radio" value="3">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">3丁目</span>
+                                </label>
+
+                                <label class="option choice-btn" data-value="4">
+                                    <input type="radio" name="address_chome_radio" value="4">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">4丁目</span>
+                                </label>
+
+                                <!-- 3行目 -->
+                                <label class="option choice-btn" data-value="5">
+                                    <input type="radio" name="address_chome_radio" value="5">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">5丁目</span>
+                                </label>
+
+                                <label class="option choice-btn" data-value="6">
+                                    <input type="radio" name="address_chome_radio" value="6">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">6丁目</span>
+                                </label>
+
+                                <!-- 幅いっぱい（上記にない） -->
+                                <label class="option span-2 choice-btn" data-value="none">
+                                    <input type="radio" name="address_chome_radio" value="none">
+                                    <span class="option__dot"></span>
+                                    <span class="option__text">上記にはない</span>
+                                </label>
+                            </fieldset>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page23">戻る</button>
+                            <button class="btn next is-hidden" data-next="page25">次へ</button>
+                        </div>
+
+                        <!-- 選択値保存（"1"〜"6" or "none"） -->
+                        <input type="hidden" name="address_chome2" value="">
+                    </section>
+                    <!-- Page 25：ご登録住所の最終確認（入れ替え可） -->
+                    <section class="page" id="page25" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                ご登録住所をご確認ください<br>
+                                よろしければ「次へ」を押してください<br>
+                                「⇅」で入れ替えができます
+                            </p>
+                        </div>
+
+                        <div class="card address-confirm" role="group" aria-label="登録住所の確認">
+                            <!-- 申込者住所 -->
+                            <div class="addr-block" id="addrApplicantBlock26" aria-labelledby="addrApplicantHead26">
+                                <p class="addr-head">@nifty光 申込者住所</p>
+                                <div class="addr-body pill">
+                                    <div class="zip">〒220-0005</div>
+                                    <div class="text">
+                                        神奈川県横浜市西区みなとみらい2丁目3-3<br>
+                                        クイーンズタワーB棟26F
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 入れ替えボタン（上下矢印） -->
+                            <div class="addr-swap">
+                                <button type="button" class="swap-btn" aria-label="申込者住所と設置先住所を入れ替え">⇅</button>
+                            </div>
+
+                            <!-- 設置先住所 -->
+                            <div class="addr-block" id="addrInstallBlock26" aria-labelledby="addrInstallHead26">
+                                <p class="addr-head">@nifty光 設置先住所</p>
+                                <div class="addr-body pill">
+                                    <div class="zip">〒220-0005</div>
+                                    <div class="text">
+                                        神奈川県横浜市西区南幸１丁目１番１号<br>
+                                        JR横浜タワー26階
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page24">戻る</button>
+                            <button class="btn next" data-next="page26">次へ</button>
+                        </div>
+
+                        <!-- 送信用（確定値を保持） -->
+                        <input type="hidden" name="applicant_address" id="applicantAddressHidden26"
+                            value="〒220-0005 神奈川県横浜市西区みなとみらい2丁目3-3 クイーンズタワーB棟26F">
+                        <input type="hidden" name="install_address" id="installAddressHidden26"
+                            value="〒220-0005 神奈川県横浜市西区南幸１丁目１番１号 JR横浜タワー26階">
+                    </section>
+                    <!-- Page 26：従業員確認へ -->
+                    <section class="page" id="page26" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                ご入力いただきありがとうございます<br>
+                                従業員の確認が必要な項目がありますので<br>
+                                このまま担当の従業員へお渡しください
+                            </p>
+                        </div>
+
+                        <div class="page-bottom right">
+                            <button class="btn next" data-next="page27">従業員確認</button>
+                        </div>
+                    </section>
+                    <!-- Page 27：コード入力 -->
+                    <section class="page" id="page27" aria-hidden="true">
+                        <div class="balloon">
+                            <p>コードを入力してください</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="code-form" role="group" aria-label="コード入力">
+                                <p class="note" aria-live="polite">半角英字5桁です</p>
+
+                                <div class="row-body">
+                                    <input id="codeInput" name="codeInput" class="pill-input center" type="text"
+                                        inputmode="latin" autocomplete="one-time-code" autocapitalize="none"
+                                        spellcheck="false" maxlength="5" placeholder="kongo"
+                                        aria-describedby="codeHelp27">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page26">戻る</button>
+                            <button class="btn next is-disabled" data-next="page28" aria-disabled="true">次へ</button>
+                        </div>
+
+                        <!-- 送信用 -->
+                        <input type="hidden" name="entry_code" id="entryCodeHidden27" value="">
+                    </section>
+                    <!-- Page 28：ご案内内容の確認 -->
+                    <section class="page" id="page28" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                内容を確認してお客様へご案内してください<br>
+                                ご了承いただけた場合<br>
+                                利用できないサービスは「申込しない」に変更され<br>
+                                ご案内はスキップします
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <ul class="form-like form-like--sheet">
+                                <!-- 光回線 -->
+                                <li>
+                                    <div class="note">光回線</div>
+                                    <div class="pill-display fs-medium">10ギガがご利用できないエリア・物件です</div>
+                                </li>
+
+                                <!-- 光電話 -->
+                                <li>
+                                    <div class="note">光電話</div>
+                                    <div class="pill-display fs-medium">光電話はご利用可能です</div>
+                                </li>
+
+                                <!-- 光テレビ -->
+                                <li>
+                                    <div class="note">光テレビ</div>
+                                    <div class="pill-display fs-medium">光テレビがご利用できないエリア・物件です</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="page-bottom between">
+                            <button class="btn back" data-prev="page27">ご案内を終了する</button>
+                            <button class="btn next" data-next="page29">お客様ご了承済み</button>
+                        </div>
+                    </section>
+                    <!-- Page 29：料金プラン選択 -->
+                    <section class="page" id="page29" aria-hidden="true" data-choice-group="nifty_price_plan">
+                        <div class="balloon">
+                            <p>@nifty光でご利用になる<br>料金プランを選んでください</p>
+                        </div>
+
+                        <div class="choices grid-2" role="group" aria-label="料金プラン">
+                            <button class="choice-btn" data-value="3y_n" aria-pressed="false">3年プラン（N）</button>
+                            <button class="choice-btn" data-value="2y_n" aria-pressed="false">2年プラン（N）</button>
+                        </div>
+
+                        <div class="page-bottom between">
+                            <button class="btn back" data-prev="page28">戻る</button>
+                            <!-- 説明ボタン -->
+                            <button class="btn accent" type="button">説明を聞く</button>
+                            <button class="btn next is-hidden" data-next="page30">次へ</button>
+                        </div>
+
+                        <!-- 選択値保持 -->
+                        <input type="hidden" name="nifty_price_plan" value="">
+                    </section>
+                    <!-- Page 30：住居タイプ（ホーム/マンション） -->
+                    <section class="page active" id="page30" aria-hidden="false" data-choice-group="housing_plan"
+                        data-show-staff-bubble="true">
+                        <div class="balloon">
+                            <p>
+                                今回は戸建てプラン「ホーム」での<br>
+                                お申し込みとなります。<br>
+                                「次へ」を教えてください。
+                            </p>
+                        </div>
+
+                        <div class="choices grid-2" role="group" aria-label="住居タイプの選択">
+                            <!-- ホーム（選択済み）＋吹き出し -->
+                            <div class="choice-wrap">
+                                <div class="staff-bubble" aria-live="polite">従業員選択済み</div>
+                                <button class="choice-btn is-selected" data-value="home" aria-pressed="true">
+                                    ホーム
+                                </button>
+                            </div>
+
+                            <!-- マンション（無効化） -->
+                            <div class="choice-wrap">
+                                <button class="choice-btn" data-value="mansion" aria-pressed="false" disabled
+                                    aria-disabled="true">
+                                    マンション
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page29">戻る</button>
+                            <button class="btn next" data-next="page31">次へ</button>
+                        </div>
+
+                        <!-- 選択値保持 -->
+                        <input type="hidden" name="housing_plan" value="home">
+                    </section>
+
+
+
+
+
+                    <!-- 完了 -->
+                    <section class="page" id="pageComplete" aria-hidden="true">
+                        <div class="balloon">
+                            <p>お申込みありがとうございました。受付が完了しました。</p>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page1">最初へ戻る</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function fit() {
+            const baseW = 768, baseH = 1024; // タブレット縦向き基準
+            const w = window.innerWidth, h = window.innerHeight;
+            const s = Math.min(w / baseW, h / baseH);
+
+            const stage = document.getElementById('stage');
+            const wrap = document.getElementById('stage-wrap');
+
+            // スケーリング
+            stage.style.transform = `scale(${s})`;
+            stage.style.transformOrigin = 'top left';
+
+            // ラッパを画面サイズにフィット
+            wrap.style.width = `${w}px`;
+            wrap.style.height = `${h}px`;
+
+            // 中央寄せ（上下左右の余白を自動調整）
+            stage.style.marginLeft = `${(w - baseW * s) / 2}px`;
+            stage.style.marginTop = `${(h - baseH * s) / 2}px`;
+        }
+
+        addEventListener('resize', fit);
+        fit();
+    </script>
+    <!-- three.js importmap -->
+    <script type="importmap">
+    {
+      "imports": {
+        "fflate": "https://cdn.jsdelivr.net/npm/fflate@0.7.4/esm/browser.js",
+        "three": "https://cdn.jsdelivr.net/npm/three@0.177.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/",
+        "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3/lib/three-vrm.module.min.js"
+      }
+    }
+  </script>
+
+    <script src="main.js" type="module"></script>
+
+    <script>
+        // ページごとのアニメ割当
+        const ACTION_FOR_PAGE = {
+            page1: 'idle',
+            page2: 'yes',
+            page3: 'no',
+            page4: 'no',
+            page5: 'no',
+            page6: 'no',
+            page7: 'no',
+            page8: 'no',
+            page9: 'no',
+            page10: 'no',
+            page11: 'no',
+            page12: 'no',
+            page13: 'no',
+            page14: 'no',
+            pageComplete: 'idle',
+        };
+
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => {
+                const active = (p.id === id);
+                p.classList.toggle('active', active);
+                p.setAttribute('aria-hidden', !active);
+            });
+            // VRMアニメ再生
+            const act = ACTION_FOR_PAGE[id] || 'idle';
+            if (window.viewer?.playAction) window.viewer.playAction(act);
+        }
+
+        document.addEventListener('click', (e) => {
+            const watch = e.target.closest('[data-youtube]');
+            if (watch) {
+                e.preventDefault();  // すぐにページ遷移させない
+                openYTModalAndPlay(watch.dataset.youtube);
+            } else {
+                const next = e.target.closest('[data-next]');
+                const prev = e.target.closest('[data-prev]');
+                if (next) showPage(next.dataset.next);
+                if (prev) showPage(prev.dataset.prev);
+            }
+        });
+
+        // 初期表示
+        showPage('page1');
+    </script>
+    <script>
+        /* ==========================================================
+           YouTube 再生
+           ========================================================== */
+        let ytPlayer = null;
+        let ytApiLoaded = false;
+
+        function loadYouTubeAPI() {
+            return new Promise((resolve) => {
+                if (window.YT && window.YT.Player) { ytApiLoaded = true; resolve(); return; }
+                const tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                window.onYouTubeIframeAPIReady = () => { ytApiLoaded = true; resolve(); };
+                document.head.appendChild(tag);
+            });
+        }
+
+        function showYTError(msg) {
+            const box = document.getElementById('yt-error');
+            if (!box) return;
+            box.textContent = msg;
+            box.hidden = false;
+        }
+
+        async function openYTModalAndPlay(videoId) {
+            const modal = document.getElementById('yt-modal');
+            modal.classList.add('active');
+            showYTError(""); // 初期化
+            const errBox = document.getElementById('yt-error'); if (errBox) errBox.hidden = true;
+
+            await loadYouTubeAPI();
+
+            const playerOptions = {
+                playerVars: {
+                    autoplay: 1,
+                    rel: 0,
+                    playsinline: 1,
+                    modestbranding: 1
+                },
+                events: {
+                    onReady: () => {
+                        try { ytPlayer.loadVideoById(videoId); } catch (e) { showYTError("プレイヤー初期化に失敗しました。"); }
+                    },
+                    onStateChange: (e) => {
+                        // 再生終了
+                        if (e.data === YT.PlayerState.ENDED) {
+                            closeYTModalAndGoNext();
+                        }
+                    },
+                    onError: (e) => {
+                        const map = {
+                            2: "不正な動画IDです。",
+                            5: "このブラウザで再生できません（HTML5プレイヤーエラー）。",
+                            100: "動画が見つからないか、非公開です。",
+                            101: "動画の埋め込みが許可されていません。",
+                            150: "動画の埋め込みが許可されていません。"
+                        };
+                        showYTError(map[e.data] || "再生中にエラーが発生しました。");
+                        console.error("YouTube error code:", e.data);
+                    }
+                }
+            };
+
+            if (!ytPlayer) {
+                ytPlayer = new YT.Player('yt-player', playerOptions);
+            } else {
+                try { ytPlayer.loadVideoById(videoId); } catch (e) {
+                    // プレイヤーが壊れていたら作り直し
+                    ytPlayer.destroy?.();
+                    ytPlayer = new YT.Player('yt-player', playerOptions);
                 }
             }
-        </script>
+        }
 
-        <script src="main.js" type="module"></script>
-    </body>
+        function closeYTModalAndGoNext() {
+            const modal = document.getElementById('yt-modal');
+            modal.classList.remove('active');
+            try { ytPlayer && ytPlayer.stopVideo(); } catch (e) { }
+            showPage('page2');
+        }
+
+        // 視聴開始ボタンのクリックをフック
+        //document.addEventListener('click', (e) => {
+        //    const btn = e.target.closest('[data-youtube]');
+        //    if (!btn) return;
+        //    e.preventDefault();  // すぐにページ遷移させない
+        //    openYTModalAndPlay(btn.dataset.youtube);
+        //});
+    </script>
+    <script>
+        (() => {
+            const page = document.getElementById('page25');
+            if (!page) return;
+
+            const swapBtn = page.querySelector('.swap-btn');
+            const appText = page.querySelector('#addrApplicantBlock26 .addr-body .text');
+            const appZip = page.querySelector('#addrApplicantBlock26 .addr-body .zip');
+            const insText = page.querySelector('#addrInstallBlock26  .addr-body .text');
+            const insZip = page.querySelector('#addrInstallBlock26  .addr-body .zip');
+
+            const hApp = document.getElementById('applicantAddressHidden26');
+            const hIns = document.getElementById('installAddressHidden26');
+
+            const flat = (zipEl, txtEl) => `${zipEl.textContent.trim()} ${txtEl.innerText.replace(/\n/g, ' ').trim()}`;
+
+            function syncHidden() {
+                hApp.value = flat(appZip, appText);
+                hIns.value = flat(insZip, insText);
+            }
+
+            swapBtn.addEventListener('click', () => {
+                const t = appText.innerHTML, z = appZip.textContent;
+                appText.innerHTML = insText.innerHTML;
+                appZip.textContent = insZip.textContent;
+                insText.innerHTML = t;
+                insZip.textContent = z;
+                syncHidden();
+            });
+
+            // 初期同期
+            syncHidden();
+        })();
+    </script>
+</body>
+
 </html>
