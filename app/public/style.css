@@ -78,6 +78,21 @@ a {
   text-decoration: none;
 }
 
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  min-width: 0; /* IE対応 */
+}
+
+/* legend も余白やフォントのリセットを推奨 */
+legend {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  font-weight: normal;
+}
+
 /* レイヤー */
 html,
 body {
@@ -458,9 +473,10 @@ canvas {
 /* 電話番号：3分割 + 罫線風ハイフン */
 .row-tel {
   display: grid;
-  grid-template-columns: 130px auto 130px auto 130px;
+  grid-template-columns: 25% auto 25% auto 25%;
   align-items: center;
   column-gap: 10px;
+  justify-items: center;
 }
 
 /* 郵便番号：2分割 + 罫線風ハイフン */
@@ -681,6 +697,25 @@ canvas {
   transition: border-color .15s, color .15s, box-shadow .15s;
 }
 
+.choice-btn[disabled] {
+  position: relative;
+  /* 擬似要素を重ねるために必要 */
+  cursor: not-allowed;
+  pointer-events: none;
+  /* 念のためクリック無効化 */
+}
+
+.choice-btn[disabled]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* ボタン全体に広げる */
+  background: rgba(0, 0, 0, 0.5);
+  /* 半透明の黒 */
+  border-radius: inherit;
+  /* ボタンが丸い場合も揃える */
+}
+
 .choice-btn:focus {
   outline: none;
 }
@@ -710,6 +745,19 @@ canvas {
   position: relative;
 }
 
+.choice-box {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  border: 4px solid #e60012;
+  border-radius: 9999px;
+  text-align: center;
+  background: #fff;
+  font-size: 30px;
+  font-weight: 600;
+  color: #e60012;
+}
+
 /* 従業員選択済みの吹き出し */
 .staff-bubble {
   position: absolute;
@@ -728,6 +776,11 @@ canvas {
   box-shadow: 0 6px 14px rgba(255, 107, 134, .25), 0 1px 0 rgba(0, 0, 0, .05) inset;
   border: 4px solid #fff;
   width: max-content;
+}
+
+.choice-btn .sub {
+  font-size: 22px;
+  margin: 0 0.2em;
 }
 
 .staff-bubble::before {
@@ -941,6 +994,121 @@ input#transferCode.is-invalid {
   color: #fff;
   line-height: 48px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .2)
+}
+
+.addon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.addon-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.addon {
+  flex: 1;
+  display: block;
+  align-items: stretch;
+}
+
+.addon input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.addon__body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  color: #222;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: .85;
+  border: 4px solid #fff;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.addon__text {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.addon__name {
+  font-weight: 600;
+}
+
+.addon input:checked+.addon__body .addon__name,
+.addon input:checked+.addon__body .addon__price {
+  color: #e40012;
+}
+
+.addon input:checked+.addon__body {
+  opacity: 1;
+  border: 4px solid #e40012;
+}
+
+/* チェックボックスの枠 */
+.addon__cb {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid #7a7f8c;
+  display: inline-block;
+  position: relative;
+  flex: 0 0 22px;
+  box-sizing: border-box;
+  background: #fff;
+  text-align: center;
+}
+
+/* チェック状態の枠色・背景 */
+.addon input:checked+.addon__body .addon__cb {
+  border-color: #ff3b30;
+  background: #ff3b30;
+}
+
+/* チェックマークを表示 */
+.addon input:checked+.addon__body .addon__cb::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.addon-scroll-hint {
+  text-align: center;
+  color: #fff;
+  opacity: .7;
+  margin-top: 8px
+}
+
+.addon__detail {
+  flex: 0 0 auto;
+  display: flex;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 3px solid #1f3f8b;
+  color: #1c3b8d;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .note {
