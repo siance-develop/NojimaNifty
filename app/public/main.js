@@ -486,6 +486,54 @@ window.choiceState = window.choiceState || {};
         if (target) target.click(); // clickで一括反映（class/hidden/次へ表示）
     };
 
+
+
+
+    function clearBubbles(scope = document) {
+        scope.querySelectorAll('.popup-bubble').forEach(b => b.remove());
+    }
+    function toHtml(text) { return text ? text.replace(/\r?\n/g, '<br>') : ''; }
+
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.choice-btn');
+        if (!btn) return;
+
+        const root = btn.closest('.data-bubble-root');
+        if (!root) return;
+
+        clearBubbles(document);
+
+        const bubble = document.createElement('div');
+        bubble.className = 'popup-bubble';
+        const raw = btn.dataset.popupText || '';
+        const normalized = raw.replace(/&#10;/g, '\n');
+        bubble.innerHTML = `<div>${toHtml(normalized)}</div>`;
+        root.appendChild(bubble);
+
+        // 三角の位置を計算してセット
+        const btnRect = btn.getBoundingClientRect();
+        const rootRect = root.getBoundingClientRect();
+        const arrowX = btnRect.left + btnRect.width / 2 - rootRect.left; // ボタン中央
+        const arrow = document.createElement('style');
+        arrow.textContent = `
+      .data-bubble-root .popup-bubble::after {
+        left:${arrowX}px;
+        transform:translateX(-50%);
+      }
+      .data-bubble-root .popup-bubble::before {
+        left:${arrowX}px;
+        transform:translateX(-50%);
+      }
+            `;
+        document.head.appendChild(arrow);
+
+        // hiddenや次へボタン制御
+        const page = btn.closest('.page');
+        page?.querySelector('.btn.next')?.classList.remove('is-hidden');
+        const hiddenInput = page?.querySelector('input[name="tsunagi_ship_to"]');
+        if (hiddenInput) hiddenInput.value = btn.dataset.value || '';
+    });
+
 })();
 
 

@@ -44,7 +44,7 @@
                         <div class="page-bottom right">
                             <!-- 動画視聴完了のみで遷移 -->
                             <button class="btn next" data-next="" data-youtube="6FRlR3EwpYM">視聴開始</button>
-                            <!--<button class="btn next" data-next="page39">視聴開始</button>-->
+                            <button class="btn next" data-next="page53">ジャンプ</button>
                         </div>
                     </section>
 
@@ -251,12 +251,12 @@
 
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page2">戻る</button>
-                            <button class="btn next" data-next="page4">次へ</button>
+                            <button class="btn next" data-next="mail_optin">次へ</button>
                         </div>
 
                     </section>
                     <!-- Page 4 -->
-                    <section class="page" id="page4" aria-hidden="true" data-choice-group="mail_optin">
+                    <section class="page" id="mail_optin" aria-hidden="true" data-choice-group="mail_optin">
                         <div class="balloon">
                             <p>@niftyからお得なお知らせメールを希望されますか？</p>
                         </div>
@@ -266,13 +266,14 @@
                         </div>
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page3">戻る</button>
-                            <button class="btn next is-hidden" data-next="page5">次へ</button>
+                            <button class="btn next is-hidden" data-next="contract_doc_method">次へ</button>
                         </div>
                         <!-- 完成したコードを保持する hidden -->
                         <input type="hidden" name="mail_optin" value="">
                     </section>
                     <!-- Page 5 -->
-                    <section class="page" id="page5" aria-hidden="true" data-choice-group="contract_doc_method">
+                    <section class="page" id="contract_doc_method" aria-hidden="true"
+                        data-choice-group="contract_doc_method">
                         <div class="balloon">
                             <p>@niftyの契約書面の確認方法を<br>選んでください</p>
                         </div>
@@ -281,14 +282,14 @@
                             <button class="choice-btn" data-value="no" aria-pressed="false">書面で確認する</button>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page4">戻る</button>
-                            <button class="btn next is-hidden" data-next="page6">次へ</button>
+                            <button class="btn back" data-prev="mail_optin">戻る</button>
+                            <button class="btn next is-hidden" data-next="contact_time">次へ</button>
                         </div>
                         <!-- 完成したコードを保持する hidden -->
                         <input type="hidden" name="contract_doc_method" value="">
                     </section>
                     <!-- Page 6 -->
-                    <section class="page" id="page6" aria-hidden="true" data-choice-group="contact_time">
+                    <section class="page" id="contact_time" aria-hidden="true" data-choice-group="contact_time">
                         <div class="balloon">
                             <p>@niftyから契約内容の確認や工事日の調整でお電話を差し上げることがあります。<br>ご希望の連絡時間帯を選んでください。</p>
                         </div>
@@ -299,14 +300,14 @@
                             <button class="choice-btn" data-value="holiday_pm" aria-pressed="false">土休日午後</button>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page5">戻る</button>
-                            <button class="btn next is-hidden" data-next="page7">次へ</button>
+                            <button class="btn back" data-prev="contract_doc_method">戻る</button>
+                            <button class="btn next is-hidden" data-next="payment_method">次へ</button>
                         </div>
                         <!-- 完成したコードを保持する hidden -->
                         <input type="hidden" name="contact_time" value="">
                     </section>
                     <!-- Page 7 -->
-                    <section class="page" id="page7" aria-hidden="true" data-choice-group="payment_method"
+                    <section class="page" id="payment_method" aria-hidden="true" data-choice-group="payment_method"
                         data-show-staff-bubble="false">
                         <div class="balloon">
                             <p>＠nifty光のお支払い方法を選んでください。<br>本日、ノジマ店頭で値引きキャンペーンを適用する場合は「クレジットカード」を選択してください。</p>
@@ -327,14 +328,15 @@
                             </button>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page6">戻る</button>
-                            <button class="btn next is-hidden" data-next="page8">次へ</button>
+                            <button class="btn back" data-prev="contact_time">戻る</button>
+                            <button class="btn next is-hidden" data-next="service_address_relation">次へ</button>
                         </div>
                         <!-- 完成したコードを保持する hidden -->
                         <input type="hidden" name="payment_method" value="">
                     </section>
                     <!-- Page 8 -->
-                    <section class="page" id="page8" aria-hidden="true" data-choice-group="service_address_relation">
+                    <section class="page" id="service_address_relation" aria-hidden="true"
+                        data-choice-group="service_address_relation">
                         <div class="balloon">
                             <p>＠nifty光をご利用になる住所はどちらですか？</p>
                         </div>
@@ -344,31 +346,32 @@
                         </div>
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page7">戻る</button>
-                            <button class="btn next is-hidden" data-next="page9">次へ</button>
+                            <button class="btn next is-hidden" data-next="ntt_holder_relation">次へ</button>
                         </div>
                         <!-- 完成したコードを保持する hidden -->
                         <input type="hidden" name="service_address_relation" value="">
                     </section>
                     <!-- Page 9 -->
-                    <section class="page" id="page9" aria-hidden="true" data-choice-group="ntt_holder_relation">
+                    <section class="page" id="ntt_holder_relation" aria-hidden="true"
+                        data-choice-group="ntt_holder_relation">
                         <div class="balloon">
                             <p>＠nifty光のお申込者は<br>回線名義人と同じですか？</p>
                         </div>
                         <div class="choices" role="group" aria-label="名義人一致の選択">
-                            <button class="choice-btn" data-value="same" data-next-page="page13"
+                            <button class="choice-btn" data-value="same" data-next-page="internet_usage"
                                 aria-pressed="false">申込者と同じ</button>
-                            <button class="choice-btn" data-value="different" data-next-page="page10"
+                            <button class="choice-btn" data-value="different" data-next-page="ntt_holder_name_kana"
                                 aria-pressed="false">申込者と異なる</button>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page8">戻る</button>
+                            <button class="btn back" data-prev="service_address_relation">戻る</button>
                             <button class="btn next is-hidden" data-next="">次へ</button>
                         </div>
                         <!-- 完成したコードを保持する hidden -->
                         <input type="hidden" name="ntt_holder_relation" value="">
                     </section>
                     <!-- Page 10 -->
-                    <section class="page" id="page10" aria-hidden="true">
+                    <section class="page" id="ntt_holder_name_kana" aria-hidden="true">
                         <div class="balloon">
                             <p>
                                 回線名義人名をカナで入力してください
@@ -390,12 +393,12 @@
                             </div>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page9">戻る</button>
-                            <button class="btn next is-disabled" data-next="page11">次へ</button>
+                            <button class="btn back" data-prev="ntt_holder_relation">戻る</button>
+                            <button class="btn next is-disabled" data-next="ntt_holder_name_kanji">次へ</button>
                         </div>
                     </section>
                     <!-- Page 11 -->
-                    <section class="page" id="page11" aria-hidden="true">
+                    <section class="page" id="ntt_holder_name_kanji" aria-hidden="true">
                         <div class="balloon">
                             <p>
                                 回線名義人名を漢字で入力してください
@@ -433,12 +436,12 @@
                             <button class="choice-btn" data-value="other" aria-pressed="false">その他</button>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page11">戻る</button>
-                            <button class="btn next is-hidden" data-next="page13">次へ</button>
+                            <button class="btn back" data-prev="ntt_holder_name_kanji">戻る</button>
+                            <button class="btn next is-hidden" data-next="internet_usage">次へ</button>
                         </div>
                     </section>
                     <!-- Page 13 -->
-                    <section class="page" id="page13" aria-hidden="true" data-choice-group="internet_usage">
+                    <section class="page" id="internet_usage" aria-hidden="true" data-choice-group="internet_usage">
                         <div class="balloon">
                             <p>
                                 現在、＠nifty光を利用予定のご住所で<br>ネット回線をご利用中ですか？
@@ -531,7 +534,7 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page13">戻る</button>
+                            <button class="btn back" data-prev="internet_usage">戻る</button>
                             <button class="btn next is-hidden" data-next="page15">次へ</button>
                         </div>
                     </section>
@@ -947,8 +950,7 @@
                                 <div class="row-body">
                                     <input id="codeInput" name="codeInput" class="pill-input center" type="text"
                                         inputmode="latin" autocomplete="one-time-code" autocapitalize="none"
-                                        spellcheck="false" maxlength="5" placeholder="kongo"
-                                        aria-describedby="codeHelp27">
+                                        spellcheck="false" maxlength="5" placeholder="kongo">
                                 </div>
                             </div>
                         </div>
@@ -1164,7 +1166,7 @@
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page33">戻る</button>
                             <!-- 右側は「次へ」ではなく補助ボタン（黄色） -->
-                            <button class="btn accent" type="button" id="phonePlanDetail">詳細を見る</button>
+                            <button class="btn accent" type="button">詳細を見る</button>
                             <!-- 選択時に自動で活性化させる想定。遷移先は次ページに合わせて変更 -->
                             <button class="btn next is-hidden" data-next="page35">次へ</button>
                         </div>
@@ -1366,7 +1368,7 @@
 
                         <div class="page-bottom">
                             <button class="btn back" data-prev="page40">戻る</button>
-                            <button class="btn accent" type="button" id="callerIdDetail">詳細を見る</button>
+                            <button class="btn accent" type="button">詳細を見る</button>
                             <button class="btn next is-hidden" data-next="page42">次へ</button>
                         </div>
 
@@ -1638,6 +1640,461 @@
 
                         <!-- 選択値の保持 -->
                         <input type="hidden" name="occupation_for_forwarding" value="">
+                    </section>
+                    <!-- Page 46 -->
+                    <section class="page" id="page46" aria-hidden="true" data-choice-group="nifty_tv_apply">
+                        <div class="balloon">
+                            <p>
+                                ＠nifty光テレビをお申し込みされますか？<br>
+                                ＠nifty光とは光回線で地上波やBSの番組を<br>
+                                見ることができるサービスです
+                            </p>
+                        </div>
+
+                        <div class="choices" role="group" aria-label="＠nifty光テレビの申し込み">
+                            <!-- 申し込む -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="apply" aria-pressed="false">
+                                申し込む
+                                <span class="sub">（月額990円）</span>
+                            </button>
+
+                            <!-- 申し込まない -->
+                            <button class="choice-btn" data-value="no_apply" aria-pressed="false">
+                                申し込まない
+                            </button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page45">戻る</button>
+                            <!-- 説明を見る（アクセントの黄色ボタン） -->
+                            <button class="btn accent" type="button">詳細を見る</button>
+                            <button class="btn next is-hidden" data-next="page47">次へ</button>
+                        </div>
+
+                        <!-- 選択値保持 -->
+                        <input type="hidden" name="nifty_tv_apply" value="">
+                    </section>
+                    <!-- Page 47-->
+                    <section class="page" id="page47" aria-hidden="true" data-choice-group="fttv_using_now">
+                        <div class="balloon">
+                            <p>
+                                現在、他社の光回線サービスで<br>
+                                光回線テレビをご利用中ですか？
+                            </p>
+                        </div>
+
+                        <div class="choices" role="group" aria-label="他社光回線テレビの利用状況">
+                            <!-- 利用中（サブテキスト付き） -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="using" aria-pressed="false">
+                                他社の光回線テレビを利用中
+                                <span class="sub sub--small">（フレッツ・テレビ／ドコモ光テレビオプション／ソフトバンク光テレビ など）</span>
+                            </button>
+
+                            <!-- 利用していない -->
+                            <button class="choice-btn" data-value="not_using" aria-pressed="false">
+                                利用していない
+                            </button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page46">戻る</button>
+                            <button class="btn next is-hidden" data-next="page48">次へ</button>
+                        </div>
+
+                        <!-- 選択値保持 -->
+                        <input type="hidden" name="fttv_using_now" value="">
+                    </section>
+
+                    <!-- Page 48 -->
+                    <section class="page" id="page48" aria-hidden="true" data-choice-group="tv_install_plan">
+                        <div class="balloon">
+                            <p>
+                                ＠nifty光テレビのご利用には<br>
+                                別途テレビ専用の接続工事が必要です。<br>
+                                工事のプランを選択してください。<br>
+                                おすすめは「スカパー!派遣工事」です！
+                            </p>
+                        </div>
+
+                        <div class="choices" role="group" aria-label="テレビ工事プランの選択">
+                            <!-- スカパー派遣工事 -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="skapa_dispatch"
+                                aria-pressed="false">
+                                スカパー!派遣工事を申し込む
+                                <span class="sub">（工事費29,810円〜＋ブースター設置無料）</span>
+                            </button>
+
+                            <!-- NTTテレビ工事 -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="ntt_tv" aria-pressed="false">
+                                NTTテレビ工事を申し込む
+                                <span class="sub">（工事費31,460円〜＋ブースター設置13,200円）</span>
+                            </button>
+
+                            <!-- 自分で工事 -->
+                            <button class="choice-btn" data-value="self" aria-pressed="false">
+                                自分で工事する
+                            </button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page47">戻る</button>
+                            <button class="btn accent" type="button">詳細を見る</button>
+                            <button class="btn next is-hidden" data-next="page49">次へ</button>
+                        </div>
+
+                        <!-- 選択値保持 -->
+                        <input type="hidden" name="tv_install_plan" value="">
+                    </section>
+                    <!-- Page 49 -->
+                    <section class="page" id="page49" aria-hidden="true" data-choice-group="nojima_campaign_addons"
+                        data-min-select="2">
+
+                        <div class="balloon">
+                            <p>
+                                ノジマ限定のキャンペーンを適用する場合は<br>
+                                以下のオプションサービスから<br>
+                                2つご加入が必要です<br>
+                                初月無料のため2ヶ月目より解約ができます
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <ul class="addon-list" role="group" aria-label="ノジマ限定キャンペーン（複数選択可）">
+                                <!-- 1 -->
+                                <li class="addon-row">
+                                    <label class="addon">
+                                        <input type="checkbox" name="nojima_addons[]" value="secure_privacy">
+                                        <span class="addon__body">
+                                            <span class="addon__cb" aria-hidden="true"></span>
+                                            <span class="addon__text">
+                                                <span class="addon__name">@nifty セキュア・プライバシー</span>
+                                                <span class="addon__price">（220円/月）</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <button type="button" class="addon__detail">詳細</button>
+                                </li>
+
+                                <!-- 2 -->
+                                <li class="addon-row">
+                                    <label class="addon">
+                                        <input type="checkbox" name="nojima_addons[]" value="makasete365">
+                                        <span class="addon__body">
+                                            <span class="addon__cb" aria-hidden="true"></span>
+                                            <span class="addon__text">
+                                                <span class="addon__name">@nifty まかせて365</span>
+                                                <span class="addon__price">（550円/月）</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <button type="button" class="addon__detail">詳細</button>
+                                </li>
+
+                                <!-- 3 -->
+                                <li class="addon-row">
+                                    <label class="addon">
+                                        <input type="checkbox" name="nojima_addons[]" value="yutai_service">
+                                        <span class="addon__body">
+                                            <span class="addon__cb" aria-hidden="true"></span>
+                                            <span class="addon__text">
+                                                <span class="addon__name">@nifty 優待サービス</span>
+                                                <span class="addon__price">（550円/月）</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <button type="button" class="addon__detail">詳細</button>
+                                </li>
+                            </ul>
+                            <p class="notice small">
+                                回線開通月（初月）無料のオプションです。<br>
+                                2ヶ月目よりマイページから解約ができます
+                            </p>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page48">戻る</button>
+                            <button class="btn next is-disabled" data-next="page50">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 50 -->
+                    <section class="page" id="page50" aria-hidden="true" data-choice-group="optional_services"
+                        data-min-select="2">
+
+                        <div class="balloon">
+                            <p>＠nifty光でご利用されたいオプションが<br>ございましたら選択してください</p>
+                        </div>
+
+                        <div class="card">
+                            <ul class="addon-list" role="group" aria-label="ノジマ限定キャンペーン（複数選択可）">
+                                <!-- 1 -->
+                                <li class="addon-row">
+                                    <label class="addon">
+                                        <input type="checkbox" name="nojima_addons[]" value="security24">
+                                        <span class="addon__body">
+                                            <span class="addon__cb" aria-hidden="true"></span>
+                                            <span class="addon__text">
+                                                <span class="addon__name">常時安全セキュリティ24</span>
+                                                <span class="addon__price">（550円/月）</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <button type="button" class="addon__detail">詳細</button>
+                                </li>
+
+                                <!-- 2 -->
+                                <li class="addon-row">
+                                    <label class="addon">
+                                        <input type="checkbox" name="nojima_addons[]" value="makasete365">
+                                        <span class="addon__body">
+                                            <span class="addon__cb" aria-hidden="true"></span>
+                                            <span class="addon__text">
+                                                <span class="addon__name">@nifty まかせて365</span>
+                                                <span class="addon__price">（550円/月）</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <button type="button" class="addon__detail">詳細</button>
+                                </li>
+
+                                <!-- 3 -->
+                                <li class="addon-row">
+                                    <label class="addon">
+                                        <input type="checkbox" name="nojima_addons[]" value="premium">
+                                        <span class="addon__body">
+                                            <span class="addon__cb" aria-hidden="true"></span>
+                                            <span class="addon__text">
+                                                <span class="addon__name">@nifty 優待サービス</span>
+                                                <span class="addon__price">（550円/月）</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <button type="button" class="addon__detail">詳細</button>
+                                </li>
+                                <!-- 4 -->
+                                <li class="addon-row">
+                                    <label class="addon">
+                                        <input type="checkbox" name="nojima_addons[]" value="mail_plus">
+                                        <span class="addon__body">
+                                            <span class="addon__cb" aria-hidden="true"></span>
+                                            <span class="addon__text">
+                                                <span class="addon__name">＠nifty メール機能拡張サービス</span>
+                                                <span class="addon__price">（110円/月）</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <button type="button" class="addon__detail">詳細</button>
+                                </li>
+                                <!-- 5 -->
+                                <li class="addon-row">
+                                    <label class="addon">
+                                        <input type="checkbox" name="nojima_addons[]" value="privacy">
+                                        <span class="addon__body">
+                                            <span class="addon__cb" aria-hidden="true"></span>
+                                            <span class="addon__text">
+                                                <span class="addon__name">＠nifty セキュア・プライバシー</span>
+                                                <span class="addon__price">（220円/月）</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    <button type="button" class="addon__detail">詳細</button>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page49">戻る</button>
+                            <button class="btn next is-disabled" data-next="page51">次へ</button>
+                        </div>
+                    </section>
+
+                    <!-- Page 51 -->
+                    <section class="page" id="page51" aria-hidden="true" data-choice-group="tsunagi_mobile">
+                        <div class="balloon">
+                            <p>
+                                ＠nifty光が開通されるまでの期間<br>
+                                無料でモバイルWi-Fiの貸し出しサービス<br>
+                                「つなぎモバイル」は従業員がご案内した通り<br>
+                                「利用しない」を選択しています
+                            </p>
+                        </div>
+
+                        <div class="choices" role="group" aria-label="つなぎモバイルの利用有無">
+                            <!-- 利用する（サブテキスト付き） -->
+                            <button class="choice-btn choice-btn--with-sub" data-value="use" aria-pressed="false">
+                                <span class="main">利用する（無料）</span>
+                                <span class="sub">開通翌月から有料（2,728円/月～）</span>
+                            </button>
+
+                            <!-- 利用しない -->
+                            <button class="choice-btn" data-value="not_use" aria-pressed="false">利用しない</button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page50">戻る</button>
+                            <button class="btn next is-hidden" data-next="page52">次へ</button>
+                        </div>
+
+                        <!-- 送信用（任意） -->
+                        <input type="hidden" name="tsunagi_mobile" value="">
+                    </section>
+                    <!-- Page 52 -->
+                    <section class="page" id="page52" aria-hidden="true" data-choice-group="tsunagi_ship_to">
+                        <div class="balloon">
+                            <p>つなぎモバイルのお送り先住所は<br>どちらにされますか？</p>
+                        </div>
+
+                        <div class="choices grid-2 data-bubble-root" role="group" aria-label="つなぎモバイルのお送り先住所">
+                            <div class="choice-wrap ">
+                                <button class="choice-btn" data-value="applicant" aria-pressed="false"
+                                    data-popup-text="〒220-0005&#10;神奈川県横浜市西区みなとみらい2丁目3-3&#10;クイーンズタワーB棟26F">申込者住所</button>
+                            </div>
+                            <div class="choice-wrap">
+                                <button class="choice-btn" data-value="installation" aria-pressed="false"
+                                    data-popup-text="〒000-0000&#10;＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊&#10;＊＊＊＊＊＊＊＊＊">設置先住所</button>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page51">戻る</button>
+                            <button class="btn next is-hidden" data-next="page53">次へ</button>
+                        </div>
+
+                        <!-- 送信用（任意） -->
+                        <input type="hidden" name="tsunagi_ship_to" value="">
+                    </section>
+                    <!-- Page 53：コード入力 -->
+                    <section class="page" id="page53" aria-hidden="true">
+                        <div class="balloon">
+                            <p>ご連絡先のメールアドレスを入力してください</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="email-form" role="group" aria-label="ご連絡先メールアドレス">
+                                <p class="note" aria-live="polite">半角英数字で入力してください。</p>
+
+                                <label class="email-field">
+                                    <input id="contactEmail" class="pill-input" type="email" inputmode="email"
+                                        autocomplete="email" autocapitalize="off" spellcheck="false"
+                                        placeholder="example@example.com" required />
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page52">戻る</button>
+                            <button class="btn next is-disabled" data-next="page54">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 54 -->
+                    <section class="page" id="page54" aria-hidden="true" data-choice-group="kddi_consent">
+                        <div class="balloon">
+                            <p>
+                                auスマートバリュー／UQ自宅セット割の<br>
+                                適用を希望しますか？<br>
+                                KDDIへお客様の＠nifty光の契約情報の提供に<br>
+                                ご同意いただく必要があります
+                            </p>
+                        </div>
+
+                        <div class="choices" role="group" aria-label="割引適用の同意可否">
+                            <button class="choice-btn" data-value="agree" aria-pressed="false">
+                                希望する（同意する）
+                            </button>
+                            <button class="choice-btn" data-value="disagree" aria-pressed="false">
+                                希望しない（同意しない）
+                            </button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page53">戻る</button>
+                            <button class="btn next is-hidden" data-next="page55">次へ</button>
+                        </div>
+
+                        <!-- 送信用（任意） -->
+                        <input type="hidden" name="kddi_consent" value="">
+                    </section>
+                    <!-- Page 55：固定電話番号の入力 -->
+                    <section class="page" id="page55" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                ご契約中のauまたはUQ mobileの<br>携帯電話番号を入力してください
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="tel-form" role="group" aria-label="携帯電話番号の入力">
+                                <p class="note" aria-live="polite">半角で入力してください</p>
+
+                                <div class="row-tel">
+                                    <input class="pill-input center" id="kddiTel1" type="text" inputmode="numeric"
+                                        pattern="\d*" maxlength="3" aria-label="市外局番">
+                                    <span class="sep">—</span>
+                                    <input class="pill-input center" id="kddiTel2" type="text" inputmode="numeric"
+                                        pattern="\d*" maxlength="4" aria-label="市内局番">
+                                    <span class="sep">—</span>
+                                    <input class="pill-input center" id="kddiTel3" type="text" inputmode="numeric"
+                                        pattern="\d*" maxlength="4" aria-label="加入者番号">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page54">戻る</button>
+                            <button class="btn next is-disabled" data-next="page56">次へ</button>
+                        </div>
+                    </section>
+
+                    <!-- Page 56 -->
+                    <section class="page" id="page56" aria-hidden="true">
+                        <div class="balloon">
+                            <p>先ほどご入力された携帯電話番号の<br>ご契約者名義を漢字で入力してください</p>
+                        </div>
+
+                        <div class="name-form" role="group" aria-label="携帯契約者名義（漢字）">
+                            <div class="card">
+                                <div class="name-form" role="group" aria-label="回線名義人名（カナ）">
+                                    <p class="note" aria-live="polite">すべて全角でご入力ください。（外国籍の方はカタカナ）</p>
+
+                                    <div class="row-body row-two">
+                                        <label class="mini">姓</label>
+                                        <input class="pill-input" id="kddi_holder_last_kanji"
+                                            name="kddi_holder_last_kanji" type="text" inputmode="text"
+                                            autocomplete="name" autocapitalize="off" spellcheck="false" placeholder="見本"
+                                            maxlength="20" required>
+                                        <label class="mini">名</label>
+                                        <input class="pill-input" id="kddi_holder_first_kanji"
+                                            name="kddi_holder_first_kanji" type="text" inputmode="text"
+                                            autocomplete="name" autocapitalize="off" spellcheck="false" placeholder="太郎"
+                                            maxlength="20" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="page-bottom between">
+                            <button class="btn back" data-prev="page55">戻る</button>
+                            <!-- 説明ボタン -->
+                            <button class="btn next" type="button">2台目を入力</button>
+                            <button class="btn next" data-next="page57">次へ</button>
+                        </div>
+                    </section>
+
+                    <!-- Page 57 : 完了案内 -->
+                    <section class="page" id="page57" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                最後までご入力ありがとうございました<br>
+                                この後、お客様の携帯電話宛に<br>
+                                クレジットカード決済の登録サイトをお送りいたします<br>
+                                この画面のまま従業員へお渡しください
+                            </p>
+                        </div>
+
+                        <!-- 必要なら中央に余白だけ -->
+                        <div class="page-content" aria-hidden="true"></div>
+
+                        <div class="page-bottom right">
+                            <button class="btn next primary" data-next="page58">従業員確認</button>
+                        </div>
                     </section>
 
 
