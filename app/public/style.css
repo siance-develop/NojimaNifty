@@ -1146,6 +1146,7 @@ input#transferCode.is-invalid {
   border: 10px solid transparent;
   border-top-color: #E85050;
 }
+
 .data-bubble-root .popup-bubble::before {
   content: "";
   position: absolute;
@@ -1154,8 +1155,142 @@ input#transferCode.is-invalid {
   border-top-color: #fff;
 }
 
+.panel {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 9%;
+  width: 94%;
+  border-radius: 12px;
+  color: #fff;
+  backdrop-filter: blur(2px);
+  overflow: hidden;
+}
 
+.panel-section {
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, .45);
+  color: #fff;
+  backdrop-filter: blur(2px);
+  text-align: center;
+}
 
+.panel-section+.panel-section {
+  margin-top: 14px;
+}
+
+.panel-section .lead {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.section-title {
+  display: inline-block;
+  color: #222;
+  font-size: 28px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: #fff;
+  margin: 0 0 8px;
+}
+
+.panel-section .desc {
+  font-size: 20px;
+  line-height: 1.6;
+  margin: 6px 0 10px;
+  text-align: left;
+}
+
+.panel-section .sublead {
+  font-size: 25px;
+  font-weight: 700;
+  margin: 8px 0 10px;
+  text-align: left;
+}
+
+.panel .option {
+  font-size: 18px;
+}
+
+.panel-flex {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 14px;
+  align-items: start;
+}
+
+.panel-qr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.consent-wrap {
+  margin: 12px 0 16px;
+}
+
+.consent-box {
+  max-height: 220px;
+  overflow: auto;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+}
+
+.consent-box ul {
+  padding-left: 1.1em;
+  margin: 0;
+}
+
+.consent-box li {
+  margin: 0 0 .4em;
+}
+
+.consent-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  justify-content: center;
+}
+
+.consent-check input {
+  width: 22px;
+  height: 22px;
+}
+
+#payer-signature #signCanvas {
+  display: block;
+  width: 100% !important;
+  height: 250px !important;
+  background: #fff !important;
+  border-radius: 14px;
+  touch-action: none;
+  /* ペン・指でスクロールしない */
+}
+
+#payer-signature .sign-tools {
+  position: absolute;
+  right: 28px;
+  bottom: 28px;
+  display: flex;
+  gap: 8px;
+}
+
+#payer-signature .tool-btn {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #1e3a8a;
+  background: #1e3a8a;
+}
 
 .notice.small {
   font-size: 18px;
@@ -1167,6 +1302,7 @@ input#transferCode.is-invalid {
   margin: 0 0 8px;
   font-size: 18px;
   color: #fff;
+  text-align: left;
 }
 
 .is-hidden {

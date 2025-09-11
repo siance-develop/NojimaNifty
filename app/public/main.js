@@ -419,7 +419,7 @@ const startBtn = document.getElementById('startButton');
 
 startBtn.addEventListener('click', () => {
     modal.classList.remove('active');   // モーダルを閉じる
-    showPage('page1');                  // 最初のページを表示
+    showPage('intro-video');                  // 最初のページを表示
 });
 
 
@@ -535,6 +535,149 @@ window.choiceState = window.choiceState || {};
     });
 
 })();
+
+(() => {
+    const page = document.getElementById('page64');
+    if (!page) return;
+
+    const agree = page.querySelector('#agree');
+    const next = page.querySelector('.btn.next');
+    const hidden = page.querySelector('input[name="consent_agree"]');
+
+    function update() {
+        if (agree.checked) {
+            next.classList.remove('is-hidden');
+            if (hidden) hidden.value = 'true';
+        } else {
+            next.classList.add('is-hidden');
+            if (hidden) hidden.value = 'false';
+        }
+    }
+    agree.addEventListener('change', update);
+    update(); // 初期
+})();
+
+(() => {
+    const page = document.getElementById('payer-signature');
+    if (!page) return;
+
+    const canvas = page.querySelector('#signCanvas');
+    const next = page.querySelector('.btn.next');
+    const undo = page.querySelector('#undoBtn');
+    const clear = page.querySelector('#clearBtn');
+    const hidden = page.querySelector('input[name="payer_signature_png"]');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+    let drawing = false;
+    let strokes = [];
+    let current = [];
+
+    // 計測キャッシュ
+    let dpr = 1, rect = null, bL = 0, bT = 0, cntW = 0, cntH = 0, scaleX = 1, scaleY = 1;
+
+    const isVisible = el => !!(el.offsetParent || el.getClientRects().length);
+
+    /** 枠線を含むrectから、内容領域（content box）の幅/高を算出してからDPRを掛ける */
+    function resizeCanvasSafe() {
+        if (!isVisible(page)) return;
+
+        rect = canvas.getBoundingClientRect();               // ボーダー込み（変形・ズーム反映）
+        const cs = getComputedStyle(canvas);
+        bL = parseFloat(cs.borderLeftWidth) || 0;
+        const bR = parseFloat(cs.borderRightWidth) || 0;
+        bT = parseFloat(cs.borderTopWidth) || 0;
+        const bB = parseFloat(cs.borderBottomWidth) || 0;
+
+        // content領域のCSSサイズ（＝実際に描ける領域）
+        cntW = Math.max(1, rect.width - bL - bR);
+        cntH = Math.max(1, rect.height - bT - bB);
+
+        dpr = Math.max(1, window.devicePixelRatio || 1);
+
+        // バッキングストアは content サイズ×DPR
+        canvas.width = Math.round(cntW * dpr);
+        canvas.height = Math.round(cntH * dpr);
+
+        // 変換行列は常に単位（スケールは自分で掛ける）
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        // CSS→実ピクセルの倍率
+        scaleX = canvas.width / cntW;
+        scaleY = canvas.height / cntH;
+
+        redraw();
+    }
+
+    function redraw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineWidth = 3 * dpr;      // 見た目の太さを維持
+        ctx.strokeStyle = '#111';
+
+        for (const path of strokes) {
+            if (path.length < 2) continue;
+            ctx.beginPath();
+            ctx.moveTo(path[0].x, path[0].y);
+            for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
+            ctx.stroke();
+        }
+    }
+
+    /** ポインタ座標（CSSピクセル）→キャンバス実ピクセルへ
+     *  左上基準を rect.left/top + borderLeft/top に合わせるのがミソ
+     */
+    function pointerToCanvas(e) {
+        const t = (e.touches ? e.touches[0] : e);
+        const xCss = (t.clientX - (rect.left + bL));
+        const yCss = (t.clientY - (rect.top + bT));
+        const x = Math.max(0, Math.min(cntW, xCss)) * scaleX;
+        const y = Math.max(0, Math.min(cntH, yCss)) * scaleY;
+        return { x, y };
+    }
+
+    function start(e) { drawing = true; current = [pointerToCanvas(e)]; strokes.push(current); redraw(); e.preventDefault(); updateButtons(); }
+    function move(e) { if (!drawing) return; current.push(pointerToCanvas(e)); redraw(); e.preventDefault(); }
+    function end() { drawing = false; if (current.length <= 1) strokes.pop(); current = []; updateButtons(); }
+
+    canvas.addEventListener('pointerdown', start);
+    canvas.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', end);
+    canvas.addEventListener('touchstart', start, { passive: false });
+    canvas.addEventListener('touchmove', move, { passive: false });
+    window.addEventListener('touchend', end);
+
+    undo?.addEventListener('click', () => { strokes.pop(); redraw(); updateButtons(); });
+    clear?.addEventListener('click', () => { strokes = []; redraw(); updateButtons(); });
+
+    next.addEventListener('click', (e) => {
+        if (next.classList.contains('is-disabled')) { e.preventDefault(); return; }
+        const dataUrl = canvas.toDataURL('image/png');
+        if (hidden) hidden.value = dataUrl;
+        window.formData = Object.assign(window.formData || {}, { payer_signature: dataUrl });
+    });
+
+    function updateButtons() {
+        const hasInk = strokes.length > 0;
+        next.classList.toggle('is-disabled', !hasInk);
+        next.setAttribute('aria-disabled', hasInk ? 'false' : 'true');
+    }
+
+    // 可視化・ズーム・スクロールに反応して再計測
+    const mo = new MutationObserver(resizeCanvasSafe);
+    mo.observe(page, { attributes: true, attributeFilter: ['aria-hidden', 'class', 'style'] });
+    window.addEventListener('resize', resizeCanvasSafe);
+    if (window.visualViewport) {
+        visualViewport.addEventListener('resize', resizeCanvasSafe);
+        visualViewport.addEventListener('scroll', resizeCanvasSafe);
+    }
+    // 初回（描画領域が確定した後）
+    setTimeout(resizeCanvasSafe, 0);
+})();
+
 
 
 //吹き出し表示制御

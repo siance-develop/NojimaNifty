@@ -33,7 +33,7 @@
             <div id="ui">
                 <div id="stage" style="width:768px; height:1024px;">
                     <!-- Page 1 -->
-                    <section class="page active" id="page1">
+                    <section class="page active" id="intro-video">
                         <div class="balloon">
                             <p>
                                 @nifty光のお申込みありがとうございます。<br>
@@ -44,12 +44,12 @@
                         <div class="page-bottom right">
                             <!-- 動画視聴完了のみで遷移 -->
                             <button class="btn next" data-next="" data-youtube="6FRlR3EwpYM">視聴開始</button>
-                            <button class="btn next" data-next="page53">ジャンプ</button>
+                            <button class="btn next" data-next="payer-signature">ジャンプ</button>
                         </div>
                     </section>
 
                     <!-- Page 2 -->
-                    <section class="page" id="page2" aria-hidden="true">
+                    <section class="page" id="customer-card" aria-hidden="true">
                         <div class="balloon">
                             <p>
                                 動画のご視聴ありがとうございます。<br>
@@ -167,13 +167,13 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page1">戻る</button>
-                            <button class="btn next" data-next="page3">次へ</button>
+                            <button class="btn back" data-prev="intro-video">戻る</button>
+                            <button class="btn next" data-next="id-choice">次へ</button>
                         </div>
                     </section>
 
                     <!-- Page 3 -->
-                    <section class="page" id="page3" aria-hidden="true">
+                    <section class="page" id="id-choice" aria-hidden="true">
                         <div class="balloon">
                             <p>
                                 お客様情報から現在ご利用中の@nifty IDが見つかりました。<br>
@@ -250,7 +250,7 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page2">戻る</button>
+                            <button class="btn back" data-prev="customer-card">戻る</button>
                             <button class="btn next" data-next="mail_optin">次へ</button>
                         </div>
 
@@ -265,7 +265,7 @@
                             <button class="choice-btn" data-value="no" aria-pressed="false">希望しない</button>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page3">戻る</button>
+                            <button class="btn back" data-prev="id-choice">戻る</button>
                             <button class="btn next is-hidden" data-next="contract_doc_method">次へ</button>
                         </div>
                         <!-- 完成したコードを保持する hidden -->
@@ -345,7 +345,7 @@
                             <button class="choice-btn" data-value="different" aria-pressed="false">申込者住所と異なる</button>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page7">戻る</button>
+                            <button class="btn back" data-prev="payment_method">戻る</button>
                             <button class="btn next is-hidden" data-next="ntt_holder_relation">次へ</button>
                         </div>
                         <!-- 完成したコードを保持する hidden -->
@@ -420,12 +420,13 @@
                             </div>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page10">戻る</button>
-                            <button class="btn next is-disabled" data-next="page12">次へ</button>
+                            <button class="btn back" data-prev="ntt_holder_name_kana">戻る</button>
+                            <button class="btn next is-disabled" data-next="relation_with_holder">次へ</button>
                         </div>
                     </section>
                     <!-- Page 12 -->
-                    <section class="page" id="page12" aria-hidden="true" data-choice-group="relation_with_holder">
+                    <section class="page" id="relation_with_holder" aria-hidden="true"
+                        data-choice-group="relation_with_holder">
                         <div class="balloon">
                             <p>
                                 回線名義人との続柄を選択してください
@@ -439,6 +440,8 @@
                             <button class="btn back" data-prev="ntt_holder_name_kanji">戻る</button>
                             <button class="btn next is-hidden" data-next="internet_usage">次へ</button>
                         </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="relation_with_holder" value="">
                     </section>
                     <!-- Page 13 -->
                     <section class="page" id="internet_usage" aria-hidden="true" data-choice-group="internet_usage">
@@ -462,14 +465,14 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page12">戻る</button>
-                            <button class="btn next is-hidden" data-next="page14">次へ</button>
+                            <button class="btn back" data-prev="relation_with_holder">戻る</button>
+                            <button class="btn next is-hidden" data-next="current_network">次へ</button>
                         </div>
                         <!-- 完成したコードを保持する hidden -->
                         <input type="hidden" name="internet_usage" value="">
                     </section>
                     <!-- Page 14 -->
-                    <section class="page" id="page14" aria-hidden="true" data-choice-group="current_network">
+                    <section class="page" id="current_network" aria-hidden="true" data-choice-group="current_network">
                         <div class="balloon">
                             <p>
                                 現在、ご利用中のネット回線を<br>選んでください
@@ -535,11 +538,11 @@
 
                         <div class="page-bottom">
                             <button class="btn back" data-prev="internet_usage">戻る</button>
-                            <button class="btn next is-hidden" data-next="page15">次へ</button>
+                            <button class="btn next is-hidden" data-next="transfer-code-input">次へ</button>
                         </div>
                     </section>
                     <!-- Page 15 -->
-                    <section class="page" id="page15" aria-hidden="true">
+                    <section class="page" id="transfer-code-input" aria-hidden="true">
                         <div class="balloon">
                             <p>
                                 フレッツ光からの乗り換えにあたって<br>NTT東日本またはNTT西日本から取得した<br>転用承諾番号を入力してください
@@ -565,12 +568,12 @@
                             </div>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page14">戻る</button>
-                            <button class="btn next is-disabled" data-next="page16">次へ</button>
+                            <button class="btn back" data-prev="current_network">戻る</button>
+                            <button class="btn next is-disabled" data-next="carrier-change-code-input">次へ</button>
                         </div>
                     </section>
                     <!-- Page 16 -->
-                    <section class="page" id="page16" aria-hidden="true">
+                    <section class="page" id="carrier-change-code-input" aria-hidden="true">
                         <div class="balloon">
                             <p>
                                 のりかえ元の光回線サービスから取得した事業者変更承諾番号を入力してください
@@ -595,12 +598,12 @@
                             </div>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page15">戻る</button>
-                            <button class="btn next is-disabled" data-next="page17">次へ</button>
+                            <button class="btn back" data-prev="transfer-code-input">戻る</button>
+                            <button class="btn next is-disabled" data-next="applicant_region">次へ</button>
                         </div>
                     </section>
                     <!-- Page 17 -->
-                    <section class="page" id="page17" aria-hidden="true" data-choice-group="applicant_region">
+                    <section class="page" id="applicant_region" aria-hidden="true" data-choice-group="applicant_region">
                         <div class="balloon">
                             <p>お申込者住所のエリアを選択してください</p>
                         </div>
@@ -611,15 +614,15 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page16">戻る</button>
-                            <button class="btn next is-hidden" data-next="page18">次へ</button>
+                            <button class="btn back" data-prev="carrier-change-code-input">戻る</button>
+                            <button class="btn next is-hidden" data-next="residence_type">次へ</button>
                         </div>
 
                         <!-- 選択値を保持 -->
                         <input type="hidden" name="applicant_region" value="">
                     </section>
                     <!-- Page 18 -->
-                    <section class="page" id="page18" aria-hidden="true" data-choice-group="residence_type">
+                    <section class="page" id="residence_type" aria-hidden="true" data-choice-group="residence_type">
                         <div class="balloon">
                             <p>お申込者住所の住居形態を選んでください</p>
                         </div>
@@ -634,15 +637,15 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page17">戻る</button>
-                            <button class="btn next is-hidden" data-next="page19">次へ</button>
+                            <button class="btn back" data-prev="applicant_region">戻る</button>
+                            <button class="btn next is-hidden" data-next="postal_code">次へ</button>
                         </div>
 
                         <!-- 選択値を保持 -->
                         <input type="hidden" name="residence_type" value="">
                     </section>
                     <!-- Page 19 -->
-                    <section class="page" id="page19" aria-hidden="true">
+                    <section class="page" id="postal_code" aria-hidden="true">
                         <div class="balloon">
                             <p>ご契約住所（現住所）の郵便番号を入力してください</p>
                         </div>
@@ -664,12 +667,12 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page18">戻る</button>
-                            <button class="btn next is-disabled" data-next="page20">次へ</button>
+                            <button class="btn back" data-prev="residence_type">戻る</button>
+                            <button class="btn next is-disabled" data-next="address_chome">次へ</button>
                         </div>
                     </section>
                     <!-- Page 20 : 住所の丁目選択 -->
-                    <section class="page" id="page20" aria-hidden="true" data-choice-group="address_chome">
+                    <section class="page" id="address_chome" aria-hidden="true" data-choice-group="address_chome">
                         <div class="balloon">
                             <p>お住まいのご住所の続きを選んでください</p>
                         </div>
@@ -728,15 +731,15 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page19">戻る</button>
-                            <button class="btn next is-hidden" data-next="page21">次へ</button>
+                            <button class="btn back" data-prev="postal_code">戻る</button>
+                            <button class="btn next is-hidden" data-next="applicant_area">次へ</button>
                         </div>
 
                         <!-- 選択値保存（"1"〜"6" or "none"） -->
                         <input type="hidden" name="address_chome" value="">
                     </section>
                     <!-- Page 21 -->
-                    <section class="page" id="page21" aria-hidden="true" data-choice-group="applicant_region2">
+                    <section class="page" id="applicant_area" aria-hidden="true" data-choice-group="applicant_region2">
                         <div class="balloon">
                             <p>お申込者住所のエリアを選択してください</p>
                         </div>
@@ -747,15 +750,16 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page20">戻る</button>
-                            <button class="btn next is-hidden" data-next="page22">次へ</button>
+                            <button class="btn back" data-prev="address_chome">戻る</button>
+                            <button class="btn next is-hidden" data-next="applicant_residence_type">次へ</button>
                         </div>
 
                         <!-- 選択値を保持 -->
                         <input type="hidden" name="applicant_region2" value="">
                     </section>
                     <!-- Page 22 -->
-                    <section class="page" id="page22" aria-hidden="true" data-choice-group="residence_type2">
+                    <section class="page" id="applicant_residence_type" aria-hidden="true"
+                        data-choice-group="residence_type2">
                         <div class="balloon">
                             <p>お申込者住所の住居形態を選んでください</p>
                         </div>
@@ -770,15 +774,15 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page21">戻る</button>
-                            <button class="btn next is-hidden" data-next="page23">次へ</button>
+                            <button class="btn back" data-prev="applicant_area">戻る</button>
+                            <button class="btn next is-hidden" data-next="postal_code2">次へ</button>
                         </div>
 
                         <!-- 選択値を保持 -->
                         <input type="hidden" name="residence_type2" value="">
                     </section>
                     <!-- Page 23 -->
-                    <section class="page" id="page23" aria-hidden="true">
+                    <section class="page" id="postal_code2" aria-hidden="true">
                         <div class="balloon">
                             <p>ご契約住所（現住所）の郵便番号を入力してください</p>
                         </div>
@@ -800,12 +804,12 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page22">戻る</button>
-                            <button class="btn next is-disabled" data-next="page24">次へ</button>
+                            <button class="btn back" data-prev="applicant_residence_type">戻る</button>
+                            <button class="btn next is-disabled" data-next="address_chome2">次へ</button>
                         </div>
                     </section>
                     <!-- Page 24 : 住所の丁目選択 -->
-                    <section class="page" id="page24" aria-hidden="true" data-choice-group="address_chome2">
+                    <section class="page" id="address_chome2" aria-hidden="true" data-choice-group="address_chome2">
                         <div class="balloon">
                             <p>お住まいのご住所の続きを選んでください</p>
                         </div>
@@ -864,15 +868,15 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page23">戻る</button>
-                            <button class="btn next is-hidden" data-next="page25">次へ</button>
+                            <button class="btn back" data-prev="postal_code2">戻る</button>
+                            <button class="btn next is-hidden" data-next="address_confirm">次へ</button>
                         </div>
 
                         <!-- 選択値保存（"1"〜"6" or "none"） -->
                         <input type="hidden" name="address_chome2" value="">
                     </section>
                     <!-- Page 25：ご登録住所の最終確認（入れ替え可） -->
-                    <section class="page" id="page25" aria-hidden="true">
+                    <section class="page" id="address_confirm" aria-hidden="true">
                         <div class="balloon">
                             <p>
                                 ご登録住所をご確認ください<br>
@@ -913,8 +917,8 @@
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page24">戻る</button>
-                            <button class="btn next" data-next="page26">次へ</button>
+                            <button class="btn back" data-prev="address_chome2">戻る</button>
+                            <button class="btn next" data-next="staff_confirm">次へ</button>
                         </div>
 
                         <!-- 送信用（確定値を保持） -->
@@ -924,7 +928,7 @@
                             value="〒220-0005 神奈川県横浜市西区南幸１丁目１番１号 JR横浜タワー26階">
                     </section>
                     <!-- Page 26：従業員確認へ -->
-                    <section class="page" id="page26" aria-hidden="true">
+                    <section class="page" id="staff_confirm" aria-hidden="true">
                         <div class="balloon">
                             <p>
                                 ご入力いただきありがとうございます<br>
@@ -950,13 +954,13 @@
                                 <div class="row-body">
                                     <input id="codeInput" name="codeInput" class="pill-input center" type="text"
                                         inputmode="latin" autocomplete="one-time-code" autocapitalize="none"
-                                        spellcheck="false" maxlength="5" placeholder="kongo">
+                                        spellcheck="false" maxlength="5" placeholder="kongou">
                                 </div>
                             </div>
                         </div>
 
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page26">戻る</button>
+                            <button class="btn back" data-prev="staff_confirm">戻る</button>
                             <button class="btn next is-disabled" data-next="page28">次へ</button>
                         </div>
                     </section>
@@ -2093,9 +2097,272 @@
                         <div class="page-content" aria-hidden="true"></div>
 
                         <div class="page-bottom right">
-                            <button class="btn next primary" data-next="page58">従業員確認</button>
+                            <button class="btn next" data-next="page58">従業員確認</button>
                         </div>
                     </section>
+                    <!-- Page 58：コード入力 -->
+                    <section class="page" id="page58" aria-hidden="true">
+                        <div class="balloon">
+                            <p>コードを入力してください</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="code-form" role="group" aria-label="コード入力">
+                                <p class="note" aria-live="polite">半角英字5桁です</p>
+
+                                <div class="row-body">
+                                    <input id="codeInput2" name="codeInput2" class="pill-input center" type="text"
+                                        inputmode="latin" autocomplete="one-time-code" autocapitalize="none"
+                                        spellcheck="false" maxlength="5" placeholder="kongou">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page57">戻る</button>
+                            <button class="btn next is-disabled" data-next="page59">次へ</button>
+                        </div>
+                    </section>
+
+                    <!-- Page 59 のべこBB受付 -->
+                    <section class="page" id="page59" aria-hidden="true" data-choice-group="id_document_type">
+                        <div class="panel">
+
+                            <div class="panel-section">
+                                <h2 class="section-title">のべこBB受付</h2>
+                                <p class="lead">
+                                    お客様の入力がすべて完了しました。<br>
+                                    従業員側で下記の対応を完了させてください
+                                </p>
+                            </div>
+
+                            <div class="panel-section">
+                                <h2 class="section-title">本人確認書類の確認</h2>
+                                <p class="desc">
+                                    お客様は着信電送サービスのお申し込みを希望されています<br>
+                                    法令によりサービスのお申し込み時には本人確認が必要です<br>
+                                    ご本人様確認が取れない場合はサービスをお申し込みいただけません
+                                </p>
+
+                                <p class="sublead">確認した本人確認書類を選択してください</p>
+                                <fieldset class="option-group" role="radiogroup" aria-label="本人確認書類">
+                                    <label class="option choice-btn" data-value="driver_license" aria-pressed="true">
+                                        <input type="radio" name="id_document_type" value="driver_license">
+                                        <span class="option__dot"></span>
+                                        <span class="option__text">運転免許証（都道府県公安委員会発行のもの。国際運転免許証を除く）</span>
+                                    </label>
+                                    <label class="option choice-btn" data-value="mynumber" aria-pressed="false">
+                                        <input type="radio" name="id_document_type" value="mynumber">
+                                        <span class="option__dot"></span>
+                                        <span class="option__text">マイナンバーカード（個人番号カード）</span>
+                                    </label>
+                                    <label class="option choice-btn" data-value="passport" aria-pressed="false">
+                                        <input type="radio" name="id_document_type" value="passport">
+                                        <span class="option__dot"></span>
+                                        <span class="option__text">パスポート</span>
+                                    </label>
+                                    <label class="option choice-btn" data-value="shogaisha" aria-pressed="false">
+                                        <input type="radio" name="id_document_type" value="shogaisha">
+                                        <span class="option__dot"></span>
+                                        <span class="option__text">身体障がい者手帳</span>
+                                    </label>
+                                    <label class="option choice-btn" data-value="seishin_shogaisha"
+                                        aria-pressed="false">
+                                        <input type="radio" name="id_document_type" value="seishin_shogaisha">
+                                        <span class="option__dot"></span>
+                                        <span class="option__text">精神障がい者保健福祉手帳（障がい者手帳）</span>
+                                    </label>
+                                    <label class="option choice-btn" data-value="ryoiku" aria-pressed="false">
+                                        <input type="radio" name="id_document_type" value="ryoiku">
+                                        <span class="option__dot"></span>
+                                        <span class="option__text">療育手帳</span>
+                                    </label>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="page-bottom right">
+                            <button class="btn next is-hidden" data-next="page60">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 60 -->
+                    <section class="page" id="page60" aria-hidden="true">
+                        <div class="panel">
+
+                            <div class="panel-section">
+                                <h2 class="section-title">のべこBB受付</h2>
+                                <p class="lead">
+                                    お客様の入力がすべて完了しました<br>
+                                    従業員側で下記の対応を完了させてください
+                                </p>
+                            </div>
+
+                            <div class="panel-section">
+                                <h2 class="section-title">スカパーWEBお申し込み番号</h2>
+                                <p class="desc">
+                                    スカパー工事選択の場合は、スカパー申込フォームより<br>
+                                    お申し込みが完了した際に発行される<br>
+                                    スカパーWEBお申し込み番号の入力が必要です
+                                </p>
+                                <div class="panel-flex">
+                                    <p class="desc">
+                                        お申し込みが完了していない場合は<br>
+                                        BYODから手続きを実施してください
+                                    </p>
+                                    <div class="panel-qr" aria-hidden="true">
+                                        <!-- 必要に応じて本物のQRに差し替えてください -->
+                                        <img src="image/skaper_qr.jpg" alt="" role="presentation">
+                                    </div>
+                                </div>
+
+
+                                <p class="note">半角英字6桁です</p>
+
+                                <label class="sky-input">
+                                    <input id="skyWebId" class="pill-input" type="text" inputmode="latin"
+                                        autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="6"
+                                        aria-label="スカパーWEBお申し込み番号（英字6桁）">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page59">戻る</button>
+                            <button class="btn next is-disabled" data-next="page61">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 61 -->
+                    <section class="page" id="page61" aria-hidden="true" data-choice-group="payer_is_applicant">
+                        <div class="balloon">
+                            <p>
+                                ＠nifty光の利用料金をお支払いされる方は<br>
+                                ＠nifty光のお申込者ご本人様ですか？
+                            </p>
+                        </div>
+
+                        <div class="choices" role="group" aria-label="支払者の本人確認">
+                            <button class="choice-btn" data-value="self" aria-pressed="false">本人</button>
+                            <button class="choice-btn" data-value="not_self" aria-pressed="false">本人以外</button>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page60">戻る</button>
+                            <!-- 遷移先は必要に応じて変更してください -->
+                            <button class="btn next is-hidden" data-next="page62">次へ</button>
+                        </div>
+
+                        <!-- 送信用（任意） -->
+                        <input type="hidden" name="payer_is_applicant" value="">
+                    </section>
+
+                    <!-- Page 62 -->
+                    <section class="page" id="page62" aria-hidden="true">
+                        <div class="balloon">
+                            <p>
+                                お支払者のご名義を漢字で入力してください
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="name-form" role="group" aria-label="お支払者名義（漢字）">
+                                <p class="note" aria-live="polite">すべて全角でご入力ください。（外国籍の方はカタカナ）</p>
+
+                                <div class="row-body row-two">
+                                    <label class="mini">姓</label>
+                                    <input class="pill-input" id="payerLastKanji" name="payerLastKanji" type="text"
+                                        inputmode="text" value="見本">
+                                    <label class="mini">名</label>
+                                    <input class="pill-input" id="payerFirstKanji" name="payerFirstKanji" type="text"
+                                        inputmode="text" value="太郎">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page61">戻る</button>
+                            <button class="btn next is-disabled" data-next="relation_with_applicant">次へ</button>
+                        </div>
+                    </section>
+                    <!-- Page 63 -->
+                    <section class="page" id="relation_with_applicant" aria-hidden="true"
+                        data-choice-group="relation_with_applicant">
+                        <div class="balloon">
+                            <p>
+                                @nifty光のお申込者との続柄を<br>選択してください
+                            </p>
+                        </div>
+                        <div class="choices grid-2" role="group" aria-label="@nifty光のお申込者との続柄">
+                            <button class="choice-btn" data-value="family" aria-pressed="false">家族</button>
+                            <button class="choice-btn" data-value="other" aria-pressed="false">その他</button>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page62">戻る</button>
+                            <button class="btn next is-hidden" data-next="page64">次へ</button>
+                        </div>
+                        <!-- 完成したコードを保持する hidden -->
+                        <input type="hidden" name="relation_with_applicant" value="">
+                    </section>
+                    <!-- Page 64 -->
+                    <section class="page" id="page64" aria-hidden="true">
+                        <div class="balloon">
+                            <p>次の項目に同意が必要です</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="consent-wrap" role="group" aria-label="同意事項">
+                                <div class="consent-box">
+                                    <ul>
+                                        <li>私は代理人として、契約者の以下の債務支払いに同意します。</li>
+                                        <li>ニフティ株式会社が定める各種サービス約款に基づく、回線利用料や各種オプションサービス利用料、コンテンツ利用料。</li>
+                                        <li>私は代理人として、ニフティ株式会社が以下の目的で私の個人情報を利用することに同意します。</li>
+                                        <li>契約申込時及び契約申込者の契約継続期間中における支払い名義人の支払い能力の調査</li>
+                                        <li>契約申込者の契約に基づく料金の請求</li>
+                                        <li>上記に関するニフティ株式会社からの確認、変更等に関する通知及び案内その他上記に付随する業務</li>
+                                    </ul>
+                                </div>
+
+                                <label class="consent-check">
+                                    <input id="agree" name="agree" type="checkbox" />
+                                    <span>同意する</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="relation_with_applicant">戻る</button>
+                            <button class="btn next is-hidden" data-next="payer-signature"
+                                aria-disabled="true">次へ</button>
+                        </div>
+                    </section>
+
+                    <!-- Payer Signature Page -->
+                    <section class="page" id="payer-signature" aria-hidden="true">
+                        <div class="balloon">
+                            <p>お支払者様のご署名をお願いいたします</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="sign-wrap" role="group" aria-label="手書き署名">
+                                <p class="note">手書きで署名してください</p>
+
+                                <div class="sign-board">
+                                    <canvas id="signCanvas" aria-label="署名キャンバス"></canvas>
+                                    <div class="sign-tools" aria-hidden="false">
+                                        <!--<button type="button" class="tool-btn" id="undoBtn">一手戻す</button>-->
+                                        <button type="button" class="tool-btn" id="clearBtn">全消去</button>
+                                    </div>
+                                </div>
+
+                                <!-- 保存用（任意） -->
+                                <input type="hidden" name="payer_signature_png" value="">
+                            </div>
+                        </div>
+                        <div class="page-bottom">
+                            <button class="btn back" data-prev="page64">戻る</button>
+                            <button class="btn next is-disabled" data-next="page66" aria-disabled="true">次へ</button>
+                        </div>
+                    </section>
+
+
+
 
 
 
@@ -2115,7 +2382,7 @@
                             <p>お申込みありがとうございました。受付が完了しました。</p>
                         </div>
                         <div class="page-bottom">
-                            <button class="btn back" data-prev="page1">最初へ戻る</button>
+                            <button class="btn back" data-prev="intro-video">最初へ戻る</button>
                         </div>
                     </section>
                 </div>
@@ -2207,7 +2474,7 @@
         });
 
         // 初期表示
-        showPage('page1');
+        showPage('intro-video');
     </script>
     <script>
         /* ==========================================================
@@ -2287,7 +2554,7 @@
             const modal = document.getElementById('yt-modal');
             modal.classList.remove('active');
             try { ytPlayer && ytPlayer.stopVideo(); } catch (e) { }
-            showPage('page2');
+            showPage('customer-card');
         }
 
         // 視聴開始ボタンのクリックをフック
